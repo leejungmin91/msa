@@ -1,0 +1,74 @@
+<!-- admin_user_list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin_layout}">
+<th:block layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>상품 목록</h4>
+        <!-- 버튼 클릭 시 상품 등록 페이지로 이동 -->
+        <button type="button"
+                class="btn btn-primary"
+                th:onclick="|window.location.href='@{/admin/product/register}'|">
+            상품 등록
+        </button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>이름</th><th>가격</th><th>할인율</th><th>노출여부</th><th>생성일</th><th>수정일</th><th>삭제</th>
+        </tr>
+        </thead>
+        <tbody id="productList">
+        </tbody>
+    </table>
+
+    <nav id="pagination">
+        <!-- 여기에 페이지네이션 버튼 렌더링 -->
+    </nav>
+</th:block>
+</html>
+
+<th:block layout:fragment="scripts">
+    <script>
+        $(document).ready(function () {
+            loadProducts();
+        });
+
+        function loadProducts(page = 0) {
+            GetAjax(`/admin/products?page=${page}&size=10`, null, true).then(data => {
+                console.log(data);
+                const html = data.data.map(productsTemplate).join('');
+                $("#productList").html(html);
+                renderPagination(data, loadProducts);
+            });
+        }
+
+        function productsTemplate(item) {
+            return `
+                <tr onclick="goToDetail(${item.id})" style="cursor:pointer;">
+                    <td>${item.name}</td>
+                    <td>${item.price.toLocaleString()}</td>
+                    <td>${item.discountRate}%</td>
+                    <td>${item.displayYn}</td>
+                    <td>${item.created}</td>
+                    <td>${item.modified}</td>
+                    <td><button class="btn btn-danger" onclick="deleteProduct(${item.id})">삭제</button></td>
+                </tr>
+            `;
+        }
+
+        function goToDetail(id) {
+            location.href = `/admin/product/update/${id}`;
+        }
+
+        function deleteProduct(id) {
+            const productId = parseInt(id);
+            if(!confirm("해당 상품을 삭제하시겠습니까?")) return;
+            DeleteAjax(`/admin/product/${productId}`, null, true).then(() => {
+                alert("삭제되었습니다.")
+                loadProducts();
+            });
+        }
+    </script>
+</th:block>

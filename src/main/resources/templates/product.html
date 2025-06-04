@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+
+    <section id="home-section" class="hero">
+        <div class="home-slider owl-carousel">
+            <div class="slider-item js-fullheight">
+                <div class="overlay"></div>
+                <div class="container-fluid p-0">
+                    <div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
+                         data-scrollax-parent="true">
+                        <img class="order-md-last img-fluid" src="/images/banner_001.png" alt="">
+                        <div class="one-forth d-flex align-items-center ftco-animate"
+                             data-scrollax=" properties: { translateY: '70%' }">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-item js-fullheight">
+                <div class="overlay"></div>
+                <div class="container-fluid p-0">
+                    <div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
+                         data-scrollax-parent="true">
+                        <img class="order-md-last img-fluid" src="/images/banner_002.png" alt="">
+                        <div class="one-forth d-flex align-items-center ftco-animate"
+                             data-scrollax=" properties: { translateY: '70%' }">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-item js-fullheight">
+                <div class="overlay"></div>
+                <div class="container-fluid p-0">
+                    <div class="row d-md-flex no-gutters slider-text align-items-center justify-content-end"
+                         data-scrollax-parent="true">
+                        <img class="order-md-last img-fluid" src="/images/banner_003.png" alt="">
+                        <div class="one-forth d-flex align-items-center ftco-animate"
+                             data-scrollax=" properties: { translateY: '70%' }">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row" id="product">
+
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-12 nav-link-wrap" id="description">
+                </div>
+            </div>
+
+        </div>
+    </section>
+</th:block>
+
+<th:block layout:fragment="scripts">
+    <script>
+        const productId = [[${productId}]];
+        $(document).on('click', '.quantity-right-plus', function (e) {
+            e.preventDefault();
+            var quantity = parseInt($('#quantity').val());
+
+            $('#quantity').val(quantity + 1);
+        });
+
+        $(document).on('click', '.quantity-left-minus', function (e) {
+            e.preventDefault();
+            var quantity = parseInt($('#quantity').val());
+
+            if (quantity > 0) {
+                $('#quantity').val(quantity - 1);
+            }
+        });
+
+
+        $(document).ready(function () {
+            loadProduct(productId);
+        });
+
+        function loadProduct(id) {
+            GetAjax(`/product/id/${id}`).then((data) => {
+                const productHtml = productTemplate(data);
+                const descriptionHtml = descriptionTemplate(data);
+                $("#product").html(productHtml);
+                $("#description").html(descriptionHtml);
+            });
+        }
+
+        function productTemplate(product) {
+            const originalPrice = product.price;
+            const discountRate = product.discountRate;
+            const discountedPrice = Math.round(originalPrice * (1 - discountRate / 100)); // 할인 가격 계산
+            const hasDiscount = discountRate > 0;
+
+            return `
+                <div class="col-lg-6 mb-5">
+                    <div id="productCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            ${product.images.map((image, index) => `
+                                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                    <a href="${image.imageUrl}" class="image-popup prod-img-bg">
+                                        <img src="${image.imageUrl}" class="d-block w-100 img-fluid" alt="${image.fileName || 'No Image'}">
+                                        ${hasDiscount ? `<span class="status">${discountRate}% Off</span>
+                                        <div class="overlay"></div>` : ''}
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 product-details pl-md-5">
+                    <h3>${product.name}</h3>
+                    <!--<p class="price"><span>${discountedPrice} 원</span></p>-->
+                    <p class="price">
+                        ${hasDiscount ?
+                        `<span class="original-price" style="text-decoration: line-through; color: gray; font-size: 14px;">
+                            ${originalPrice.toLocaleString()}원
+                        </span>
+                        <span class="discounted-price" style="color: red; font-size: 20px; font-weight: bold; margin-left: 10px;">
+                            ${discountedPrice.toLocaleString()}원
+                        </span>` : `<p class="price"><span>${originalPrice.toLocaleString()} 원</span></p>`}
+                    </p>
+                    <p>${product.description || ''}</p>
+                    <div class="row mt-4">
+                        <div class="w-100"></div>
+                        <div class="input-group col-md-6 d-flex mb-3">
+                        <span class="input-group-btn mr-2">
+                            <button type="button" id="dd" class="quantity-left-minus btn" data-type="minus" data-field="">
+                                <i class="ion-ios-remove"></i>
+                            </button>
+                        </span>
+                        <input type="text" id="quantity" name="quantity" class="quantity form-control input-number"
+                                       value="1" min="1" max="100">
+                        <span class="input-group-btn ml-2">
+                            <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                                 <i class="ion-ios-add"></i>
+                            </button>
+                        </span>
+                        </div>
+                        <div class="w-100"></div>
+                    </div>
+                    <br>
+                    <p>
+                        <a href="javascript:addCart(${product.id})" class="btn btn-black py-3 px-5 mr-2">장바구니</a>
+                        <a href="javascript:goPayment(${product.id});" class="btn btn-primary py-3 px-5">바로구매</a>
+                    </p>
+                </div>`;
+        }
+
+        function descriptionTemplate(product) {
+            return `<img src="${product.descriptionImageUrl}" class="d-block w-100 img-fluid" alt="${product.descriptionFileName || 'No Image'}">`;
+        }
+
+        function generateStars(count) {
+            return Array(count).fill('<a href="#"><span class="ion-ios-star-outline"></span></a>').join('');
+        }
+
+        function addCart(productId) {
+            const quantity = $("#quantity").val();
+            const data = {"productId" : productId, "quantity" : quantity};
+            PostAjax(`/cart`, data, true).then(async () => {
+                await authCheck();
+                showCartModal();
+            });
+        }
+
+        function addCart(productId) {
+            if(!denyAction()) return;
+            const quantity = $("#quantity").val();
+            const data = {"productId" : productId, "quantity" : quantity};
+            PostAjax(`/cart`, data, true).then(async () => {
+                await authCheck();
+                showCartModal();
+            });
+        }
+
+        function goPayment(productId) {
+            const quantity = parseInt($("#quantity").val());
+            const data = {"productId" : productId, "quantity" : quantity};
+            if(!denyAction()) return;
+            location.href = `/checkout/${productId}?quantity=${quantity}`;
+        }
+    </script>
+</th:block>
+</html>

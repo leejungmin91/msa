@@ -1,0 +1,123 @@
+<!-- templates/admin/product_register.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin_layout}">
+<th:block layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4>상품 등록</h4>
+        <a href="/admin/products" class="btn btn-secondary">목록으로</a>
+    </div>
+
+    <!-- id만 붙이고 action/th:object 제거 -->
+    <form id="productForm" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="name" class="form-label">이름</label>
+            <input type="text" id="name" name="name"
+                   class="form-control" placeholder="상품 이름" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">가격</label>
+            <input type="number" id="price" name="price"
+                   class="form-control" placeholder="숫자만" min="0" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="discountRate" class="form-label">할인율 (%)</label>
+            <input type="number" id="discountRate" name="discountRate"
+                   class="form-control" placeholder="0~100" min="0" max="100" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="mainImage" class="form-label">메인 이미지</label>
+            <input type="file" id="mainImage" name="mainImage"
+                   class="form-control" accept="image/*" required>
+            <div class="mt-2">
+                <img id="mainPreview" src="#" alt="Main Preview"
+                     class="img-thumbnail" style="max-height:150px; display:none;">
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="subImages" class="form-label">서브 이미지</label>
+            <input type="file" id="subImages" name="subImages"
+                   class="form-control" accept="image/*" multiple>
+            <div id="subPreviews" class="mt-2 d-flex flex-wrap" style="gap:.5rem;"></div>
+        </div>
+
+        <div class="mb-4">
+            <label for="descriptionImage" class="form-label">상세 설명</label>
+            <input type="file" id="descriptionImage" name="descriptionImage"
+                   class="form-control" accept="image/*" required>
+            <div class="mt-2">
+                <img id="descriptionPreviews" src="#" alt="Main Preview"
+                     class="img-thumbnail" style="max-height:150px; display:none;">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">등록</button>
+        <button type="reset"  class="btn btn-outline-secondary ms-2">취소</button>
+    </form>
+</th:block>
+
+<th:block layout:fragment="scripts">
+    <script>
+        // -------- 이미지 미리보기 --------
+        $('#mainImage').on('change', function(evt) {
+            const file = evt.target.files[0], preview = $('#mainPreview');
+            if (!file) return preview.hide();
+            const reader = new FileReader();
+            reader.onload = e => preview.attr('src', e.target.result).show();
+            reader.readAsDataURL(file);
+        });
+
+        $('#descriptionImage').on('change', function(evt) {
+            const file = evt.target.files[0], preview = $('#descriptionPreviews');
+            if (!file) return preview.hide();
+            const reader = new FileReader();
+            reader.onload = e => preview.attr('src', e.target.result).show();
+            reader.readAsDataURL(file);
+        });
+
+        $('#subImages').on('change', function(evt) {
+            const container = $('#subPreviews').empty();
+            Array.from(evt.target.files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    $('<img>')
+                        .attr('src', e.target.result)
+                        .addClass('img-thumbnail')
+                        .css('max-height','100px')
+                        .appendTo(container);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // -------- AJAX 제출 --------
+        $('#productForm').on('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            $.ajax({
+                url: apiPrefix+'/admin/product',
+                method: 'POST',
+                data: formData,
+                processData: false,   // 필수
+                contentType: false,   // 필수
+                enctype: 'multipart/form-data'
+            })
+                .done(() => {
+                    alert('등록 성공');
+                    location.href = '/admin/products';
+                })
+                .fail(err => {
+                    console.error(err);
+                    alert('등록 중 오류');
+                });
+        });
+    </script>
+</th:block>
+</html>

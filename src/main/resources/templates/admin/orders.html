@@ -1,0 +1,86 @@
+<!-- admin_user_list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin_layout}">
+<th:block layout:fragment="content">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>결제 목록</h4>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>주문번호</th><th>가격</th><th>주문자</th><th>결제여부</th><th>주문일</th>
+        </tr>
+        </thead>
+        <tbody id="productList">
+        </tbody>
+    </table>
+
+    <nav id="pagination">
+        <!-- 여기에 페이지네이션 버튼 렌더링 -->
+    </nav>
+</th:block>
+</html>
+
+<th:block layout:fragment="scripts">
+    <script>
+        $(document).ready(function () {
+            loadProducts();
+        });
+
+        function loadProducts(page = 0) {
+            GetAjax(`/admin/orders?page=${page}&size=10`, null, true).then(data => {
+               // console.log(data);
+                const html = data.data.map(ordersTemplate).join('');
+                $("#productList").html(html);
+                renderPagination(data, loadProducts);
+            });
+        }
+
+        function ordersTemplate(item) {
+            const payInfo = item.orderPayResponseDto;
+            const detailInfo = item.orderDetailResponseDto;
+
+            console.log(item);
+            console.log(payInfo);
+            console.log(detailInfo);
+            const orderDate = formatISODateTimeKST(item.orderDate);
+            return `
+                <tr onclick="goToDetail(${item.orderNo})" style="cursor:pointer;">
+                    <td>${item.orderNo}</td>
+                    <td>${payInfo.amt}</td>
+                    <td>${detailInfo.orderName}%</td>
+                    <td>${item.statusText}</td>
+                    <td>${orderDate}</td>
+                </tr>
+            `;
+        }
+
+        function goToDetail(ordNo) {
+            location.href="/admin/orderDetail?orderNo="+encodeURIComponent(ordNo);
+        }
+
+        function deleteProduct(id) {
+            const productId = parseInt(id);
+            if(!confirm("해당 상품을 삭제하시겠습니까?")) return;
+            DeleteAjax(`/admin/product/${productId}`, null, true).then(() => {
+                alert("삭제되었습니다.")
+                loadProducts();
+            });
+        }
+
+        function formatISODateTimeKST(isoString) {
+            const [datePart, timePart] = isoString.split('T');
+            const [year, month, day] = datePart.split('-').map(Number);
+            const [hour, minute, second] = timePart.split(':').map(Number);
+
+            const date = new Date(year, month - 1, day, hour, minute, second);
+            const kst = new Date(date.getTime() + (9 * 60 * 60 * 1000));
+
+            const pad = n => n.toString().padStart(2, '0');
+
+            return `${kst.getFullYear()}년 ${pad(kst.getMonth() + 1)}월 ${pad(kst.getDate())}일 ${pad(kst.getHours())}시 ${pad(kst.getMinutes())}분 ${pad(kst.getSeconds())}초`;
+        }
+    </script>
+</th:block>

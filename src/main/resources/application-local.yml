@@ -1,0 +1,27 @@
+# src/main/resources/application-local.yml
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://jtocean-database.c9u82s4omkrp.ap-southeast-2.rds.amazonaws.com:3306/jtocean
+    username: jtocean
+    password: jtocean!
+  redis:
+    host: 3.35.20.58
+    port: 6379
+    password: jtocean   # 보안 설정한 경우 추가
+    timeout: 2000
+
+server:
+  port: 8080
+
+kisa:
+  mid: kistest00m
+  merchantKey: 2d6ECGhR1pg/1QGE1lcRI4awsWEgshjEyI8UgYslLPJSuNeyPTkdrT8XWARezvDTUJClWQWhjxzBbu7AsuLZqg==
+  payReturnUrl: "${api.prefix}/order/callback"
+  cancelReturnUrl: "${api.prefix}/order/cancelCallback"
+  apiUrl: "https://testapi.kispg.co.kr"
+  currencyType: KRW
+  model: WEB
+
+file:
+  upload-path: C:\uploads

@@ -1,0 +1,6 @@
+[
+  { "name": "하늘색 우산", "price": 10000, "images":  [{"fileName" : "하늘색우산.png", "imageUrl" : "/images/하늘색우산.png", "displayOrder" : 0}], "description":  "하늘색우산은 하늘색우산입니다."},
+  { "name": "붉은 채찍", "price": 50000, "images":  [{"fileName" : "붉은채찍.jpg", "imageUrl" : "/images/붉은채찍.jpg", "displayOrder" : 0 }, {"fileName" : "붉은채찍2.jpg", "imageUrl" : "/images/붉은채찍2.png", "displayOrder" : 1 }], "description":  "붉은 채찍으로 맞으면 아파요." },
+  { "name": "노가다 목장갑", "price": 1000, "images":  [{"fileName" : "노가다목장갑.jpg", "imageUrl" : "/images/노가다목장갑.jpg", "displayOrder" : 0 }] },
+  { "name": "빨간 포션", "price": 50, "images":  [{"fileName" : "빨간포션.jpg", "imageUrl" : "/images/빨간포션.jpg", "displayOrder" : 0 }] }
+]

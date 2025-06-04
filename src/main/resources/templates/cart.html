@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+	<div class="hero-wrap hero-bread" style="background-image: url('/images/bg_6.jpg');">
+		<div class="container">
+			<div class="row no-gutters slider-text align-items-center justify-content-center">
+				<div class="col-md-9 ftco-animate text-center">
+					<h1 class="mb-0 bread">장바구니</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<section class="ftco-section ftco-cart">
+		<div class="container">
+			<div id="cartItemList"></div>
+			<div id="emptyCartBox" style="display: none; text-align: center; padding: 60px 0;">
+				<p style="font-size: 18px; font-weight: 600; color: #333;">장바구니에 담긴 상품이 없어요</p>
+				<p style="color: #888; margin-bottom: 20px;">원하는 상품을 담아보세요</p>
+				<a href="/" class="btn btn-primary" style="color: #333;">상품 담으러 가기</a>
+			</div>
+
+			<div class="row justify-content-start" id="totalPriceBox">
+				<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate">
+					<div class="cart-total mb-3">
+						<h3>구매 내역</h3>
+						<p class="d-flex"><span>금액</span><span id="subtotalPrice">0원</span></p>
+						<!--<p class="d-flex"><span>배송비</span><span>0원</span></p>-->
+						<hr>
+						<p class="d-flex total-price"><span>총 금액</span><span id="totalPrice">0원</span></p>
+					</div>
+					<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4">결제</a></p>
+				</div>
+			</div>
+		</div>
+	</section>
+</th:block>
+
+<th:block layout:fragment="scripts">
+	<script>
+		$(document).ready(function () {
+			loadCart();
+		});
+
+		$(document).on('click', '.remove-product', function() {
+			if(!confirm('상품을 삭제하시겠습니까?')) return;
+			const productId = $(this).data('product-id');
+			DeleteAjax(`/cart/`+productId).then((data) => {
+				alert('삭제되었습니다.');
+				location.reload();
+			});
+		});
+
+		$(document).on('click', '.qty-increase, .qty-decrease', function () {
+			const isIncrease = $(this).hasClass('qty-increase');
+			const itemId = $(this).data('id');
+			const $input = $(`.qty-input[data-id='${itemId}']`);
+
+			let quantity = parseInt($input.val());
+			if (isNaN(quantity)) quantity = 1;
+
+			// 수량 변경
+			quantity = isIncrease ? quantity + 1 : Math.max(1, quantity - 1);
+			$input.val(quantity);
+
+			const data = {"productId" : itemId, "quantity" : isIncrease ? 1 : -1};
+			PatchAjax(`/cart/`+itemId, data, true).then((data) => {
+				setCart(data);
+			});
+		});
+
+		$(document).on('input', '.qty-input', function () {
+			const $input = $(this);
+			const itemId = $input.data('id');
+			const $priceEl = $(`.cart-price[data-id='${itemId}']`);
+			const $cartBox = $(`[data-item-id='${itemId}']`);
+
+			let quantity = parseInt($input.val().replace(/[^0-9]/g, ''));
+			if (isNaN(quantity) || quantity < 1) quantity = 1;
+			$input.val(quantity);
+
+			const unitPrice = parseInt($cartBox.data('price') || 10000);
+			const totalPrice = unitPrice * quantity;
+			$priceEl.text(`${totalPrice.toLocaleString()}원`);
+
+			const data = {"productId" : itemId, "quantity" : quantity};
+			PostAjax(`/cart`, data, true).then((data) => {
+				setCart(data);
+			});
+		});
+
+		function loadCart() {
+			GetAjax("/cart").then(data => {
+				setCart(data);
+			});
+		}
+
+		function setCart(data) {
+			if (!data || data.length === 0) {
+				$("#cartItemList").hide();
+				$("#totalPriceBox").hide();
+				$("#emptyCartBox").show();
+			} else {
+				const html = data.map(cartTemplate).join('');
+				$("#cartItemList").html(html).show();
+				$("#totalPriceBox").show();
+				$("#emptyCartBox").hide();
+				updateCartTotal(data);
+			}
+		}
+
+		function cartTemplate(item) {
+			const discountRate = item.discountRate;
+			const total = item.price  * item.quantity;
+
+			return `
+			  <div class="cart-box" style="padding: 16px 20px;">
+				<div class="cart-content" style="display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+
+				  <!-- 체크박스 + 이미지 -->
+				  <div style="display: flex; align-items: center; gap: 32px;">
+					<input type="checkbox" checked>
+					<div class="cart-thumbnail">
+					  <img src="${item.mainImageUrl || '/images/product-1.jpg'}" alt="${item.mainFileName}">
+					</div>
+				  </div>
+
+				  <!-- 상품명 -->
+				  <div style="flex: 1; font-size: 16px; color: #333;">
+					${item.name}
+				  </div>
+
+				  <!-- 수량 조절 -->
+				  <div class="cart-qty-control" style="display: flex; align-items: center; gap: 12px;">
+					<button class="qty-decrease" data-id="${item.productId}" style="font-size: 20px; color: #8855d6;">➖</button>
+					<input type="text" class="qty-input" data-id="${item.productId}" value="${item.quantity}" style="width: 48px; height: 32px; text-align: center; font-size: 16px;">
+					<button class="qty-increase" data-id="${item.productId}" style="font-size: 20px; color: #8855d6;">➕</button>
+				  </div>
+
+				  <!-- 가격 -->
+				  <div style="white-space: nowrap; font-weight: bold; font-size: 16px; color: #111;">
+					${total.toLocaleString()}원
+				  </div>
+
+				  <!-- 삭제 버튼 -->
+				  <button class="btn-close remove-product" data-product-id="${item.productId}" aria-label="상품 삭제" style="margin-left: 12px; font-size: 18px;">&#10005;</button>
+				</div>
+			  </div>
+			  `;
+		}
+
+		function updateCartTotal(cartItems) {
+			let subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+			let delivery = 0;
+			let total = subtotal + delivery;
+			$("#subtotalPrice").text(subtotal.toLocaleString() + "원");
+			$("#totalPrice").text(total.toLocaleString() + "원");
+		}
+	</script>
+</th:block>
+</html>

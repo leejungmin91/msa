@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>404 - 페이지를 찾을 수 없습니다</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f6f8fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .error-container {
+            text-align: center;
+            max-width: 500px;
+        }
+
+        .error-code {
+            font-size: 96px;
+            font-weight: 700;
+            color: #24292f;
+        }
+
+        .error-message {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #586069;
+        }
+
+        .error-tip {
+            font-size: 14px;
+            color: #6a737d;
+        }
+
+        .btn-home {
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <div class="error-code">404</div>
+    <div class="error-message">페이지를 찾을 수 없습니다.</div>
+    <div class="error-tip">요청하신 페이지가 존재하지 않거나 이동되었을 수 있어요.<br>
+        그래도 우리는 여전히 여기 있어요. 💪
+    </div>
+    <a href="/" class="btn btn-primary btn-home mt-4">홈으로 돌아가기</a>
+</div>
+</body>
+</html>

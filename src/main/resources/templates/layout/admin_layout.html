@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body { padding-top: 56px; }
+        .sidebar {
+            position: fixed;
+            top: 56px;
+            bottom: 0;
+            left: 0;
+            width: 220px;
+            background-color: #f8f9fa;
+            padding-top: 1rem;
+        }
+        .sidebar a {
+            display: block;
+            padding: 8px 16px;
+            color: #333;
+        }
+        .sidebar a:hover {
+            background-color: #e2e6ea;
+            text-decoration: none;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loadingOverlay" style="display: none;">
+    <img src="/css/ajax-loader.gif" alt="로딩 중..." />
+</div>
+
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/admin/users">관리자</a>
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a href="javascript:logout();" class="nav-link" style="color:white;">로그아웃</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Sidebar -->
+<div class="sidebar" id="menuList">
+    <a href="/admin/users">회원 관리</a>
+    <a href="/admin/approval">승인 관리</a>
+    <a href="/admin/products">상품 관리</a>
+    <a href="/admin/orders">주문 관리</a>
+</div>
+
+<!-- Main content -->
+<div class="main-content">
+    <th:block layout:fragment="content"></th:block>
+</div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.1.3.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/jquery.stellar.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/jquery.animateNumber.min.js"></script>
+<script src="/js/bootstrap-datepicker.js"></script>
+<script src="/js/customAjax.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/admin/admin.js"></script>
+<script>
+    $(document).ready(function () {
+
+        const currentPath = window.location.pathname;
+
+        $("#menuList a").each(function () {
+            const href = $(this).attr("href");
+
+            if (currentPath.startsWith(href)) {
+                $(this).addClass("active");
+            }
+        });
+
+        const checkAuth = async () => {
+            return await authCheckAjax();
+        };
+
+        checkAuth().then((data) => {
+            if(data.role !== 'ROLE_ADMIN') {
+                window.location.href = "/403";
+            }
+        });
+
+    });
+
+    async function logout() {
+        const isLogout = await logoutAjax(); // 로그인 요청
+
+        if (isLogout) {
+            window.location.href = "/";
+        } else {
+            alert("로그아웃에 실패했습니다.");
+        }
+    }
+</script>
+
+<!-- ✅ 개별 페이지의 script 추가 -->
+<th:block layout:fragment="scripts">
+</th:block>
+
+</html>

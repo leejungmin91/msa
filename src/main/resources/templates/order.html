@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+
+<th:block layout:fragment="content">
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="login-wrap p-4 p-md-5 bg-white">
+                        <div class="order-status-summary d-flex justify-content-around align-items-center border rounded bg-white py-3 mb-4">
+                            <!--<div class="text-center"><div class="fw-bold">입금대기</div><div class="text-primary">0</div></div>
+                            <div>&gt;</div>-->
+                            <div class="text-center"><div style="font-weight: bold;">주문완료</div><div class="text-primary" id="statusOrder">0</div></div>
+                            <div><!--<span class="flipped-truck">🚚</span>-->➡️</div>
+                            <!--<div class="text-center"><div>배송준비</div><div class="text-primary">0</div></div>
+                            <div>&gt;</div>-->
+                            <div class="text-center"><div style="font-weight: bold;">배송중</div><div class="text-primary" id="statusDelivery">0</div></div>
+                            <div><!--<span class="flipped-truck">🚚</span>-->➡️</div>
+                            <div class="text-center"><div style="font-weight: bold;">배송완료</div><div class="text-primary" id="statusCompleted">0</div></div>
+                            <!--<div>&gt;</div>
+                            <div class="text-center"><div>구매확정</div><div class="text-primary">12</div></div>-->
+                        </div>
+
+                        <div class="d-flex justify-content-start order-select-header" style="gap:16px;">
+                            <select class="custom-select" id="periodSelect" style="width: 120px;">
+                                <option value="3m" selected>3개월 전</option>
+                                <option value="6m">6개월 전</option>
+                                <option value="1y">1년 전</option>
+                            </select>
+                            <select class="custom-select" id="statusSelect" style="width: 120px;">
+                                <option value="ALL" selected>전체</option>
+                                <option value="ORDER">주문완료</option>
+                                <option value="DELIVERY">배송중</option>
+                                <option value="COMPLETE">배송완료</option>
+                                <option value="CANCEL">주문취소</option>
+                            </select>
+                        </div>
+
+                        <div id="orderList">
+                            <!-- 주문별 그룹 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</th:block>
+
+<th:block layout:fragment="scripts">
+    <script>
+        $(document).ready(() => {
+            searchOrders();
+
+            $('#periodSelect, #statusSelect').on('change', function () {
+                searchOrders();
+            });
+        });
+
+        function searchOrders() {
+            let period, status;
+            period = $('#periodSelect').val();
+            status = $('#statusSelect').val();
+            const data = {"period" : period, "status" : status};
+
+            PostAjax(`/order/@me`, data, true).then((data) => {
+
+                const orders = data.orders;
+                const status = data.statusCount;
+
+                if (!orders || orders.length === 0) {
+                    $("#orderList").html(`<p class="text-center">주문 내역이 없습니다.</p>`);
+                    return;
+                }
+
+                $("#statusOrder").text(status.ORDER);
+                $("#statusDelivery").text(status.DELIVERY);
+                $("#statusCompleted").text(status.COMPLETED);
+
+                let html = '';
+
+                let lastPrintedDate = null;
+
+                orders.forEach(group => {
+                    const orderItems = group.items;
+
+                    // 1. orderNo로 그룹핑
+                    const groupedByOrderNo = {};
+                    orderItems.forEach(item => {
+                        if (!groupedByOrderNo[item.orderNo]) {
+                            groupedByOrderNo[item.orderNo] = [];
+                        }
+                        groupedByOrderNo[item.orderNo].push(item);
+                    });
+
+                    // 2. 주문번호별로 나눠서 출력
+                    Object.keys(groupedByOrderNo).forEach(orderNo => {
+                        const items = groupedByOrderNo[orderNo];
+                        const firstItem = items[0];
+                        const itemCount = items.length;
+                        const totalAmount = items.reduce((sum, item) => sum + (item.productPrice * item.productQuantity), 0);
+                        const orderDate = formatISODateTimeKST(firstItem.orderDate);
+
+                        if (lastPrintedDate !== orderDate) {
+                            html += `
+                                <div class="order-date-header d-flex justify-content-between align-items-center">
+                                    <div><strong>${orderDate}</strong></div>
+                                </div>
+                            `;
+                            lastPrintedDate = orderDate;
+                        }
+
+                        html += `
+                            <div class="order-group border bg-white p-4 mb-4 rounded">
+                                <div class="order-item d-flex justify-content-between align-items-center">
+                                    <img src="${firstItem.productMainImageUrl || 'https://via.placeholder.com/80'}" width="80" height="80" class="border rounded" alt="${firstItem.productMainFileName}">
+                                    <div class="order-item-content">
+                                        <div class="fw-bold large">
+                                            <strong>${firstItem.productName}</strong>
+                                            ${itemCount > 1 ? `<span class="text-muted small"> 외 ${itemCount - 1}건</span>` : ''}
+                                        </div>
+                                        <div class="text-muted small">${totalAmount.toLocaleString()}원</div>
+                                        <div class="text-muted small">${firstItem.statusText}</div>
+                                        <div class="text-muted small">주문시간 : ${orderDate}</div>
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-dark btn-sm" onclick="goDetail('${orderNo}')">상세보기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                });
+
+                $("#orderList").html(html);
+            }).catch(() => {
+                $("#orderList").html(`<p class="text-danger text-center">주문 정보를 불러오는 데 실패했습니다.</p>`);
+            });
+        }
+
+        function goDetail(ordNo){
+           location.href="/order/orderDetail?orderNo="+encodeURIComponent(ordNo);
+        }
+
+        function formatISODateTimeKST(isoString) {
+            const [datePart, timePart] = isoString.split('T');
+            const [year, month, day] = datePart.split('-').map(Number);
+            const [hour, minute, second] = timePart.split(':').map(Number);
+
+            const date = new Date(year, month - 1, day, hour, minute, second);
+            const kst = new Date(date.getTime() + (9 * 60 * 60 * 1000)); 
+
+            const pad = n => n.toString().padStart(2, '0');
+
+            return `${kst.getFullYear()}년 ${pad(kst.getMonth() + 1)}월 ${pad(kst.getDate())}일 ${pad(kst.getHours())}시 ${pad(kst.getMinutes())}분 ${pad(kst.getSeconds())}초`;
+        }
+
+
+    </script>
+</th:block>
+
+</html>

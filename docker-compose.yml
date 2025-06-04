@@ -1,0 +1,49 @@
+services:
+  app:
+    build: .
+    image: jtocean-app:latest
+    container_name: jtocean-app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - UPLOAD_DIR=/uploads
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - /home/ubuntu/uploads:/uploads:rw
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis
+    restart: always
+    ports:
+      - "6380:6379"
+    command: >
+      redis-server
+      --requirepass jtocean
+      --appendonly yes
+      --save 900 1
+      --save 300 10
+    volumes:
+      - redis-data:/data
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: jtocean-nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      # 호스트 업로드 폴더를 그대로 nginx가 읽도록
+      - /home/ubuntu/uploads:/usr/share/nginx/html/uploads:ro
+      # Nginx 설정 파일
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+
+volumes:
+  redis-data:

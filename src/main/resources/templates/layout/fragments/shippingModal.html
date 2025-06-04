@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block th:fragment="shippingModalLayout">
+
+    <div id="shippingModalOverlay" class="modal-overlay" style="display: none;">
+        <div id="shippingModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header" style="border:none;">
+                    <span>배송지 선택</span>
+                    <button class="modal-close" onclick="closeModal()">×</button>
+                </div>
+
+                <div class="modal-body" style="border:none; display: none;" id="shippingList">
+                </div>
+
+                <div class="modal-footer" style="border:none;">
+                    <button class="btn btn-primary full-width" id="openAddShippingBtn">배송지 추가</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="shippingAddModal" class="modal-content add-mode">
+            <div class="modal-header" style="border:none;">
+                <button id="backToListBtn" class="back-btn">←</button>
+                <span>배송지 추가</span>
+                <button class="modal-close">×</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="addShippingForm">
+                    <input type="hidden" name="id" value=""/>
+                    <div class="form-line">
+                        <label class="form-label-shipping">배송지명</label>
+                        <input type="text" class="form-input" name="subject" />
+                    </div>
+
+                    <div class="form-line">
+                        <label class="form-label-shipping">받는 사람</label>
+                        <input type="text" class="form-input" name="name" />
+                    </div>
+
+                    <div class="form-line">
+                        <label class="form-label-shipping">전화번호</label>
+                        <div class="phone-combo">
+                            <input type="text" class="form-input" name="phone" />
+                        </div>
+                    </div>
+
+                    <div class="form-line">
+                        <label class="form-label-shipping">주소</label>
+                        <div class="address-combo">
+                            <button type="button" class="btn btn-search" id="searchAddress">주소찾기</button>
+                            <input type="text" class="form-input" style="flex: 1;min-width: 0;" name="zipcode" readonly/>
+                        </div>
+                    </div>
+
+                    <div class="form-line">
+                        <label class="form-label-shipping"></label>
+                        <input type="text" class="form-input" placeholder="도로명 주소" name="address" readonly/>
+                    </div>
+
+                    <div class="form-line">
+                        <label class="form-label-shipping"></label>
+                        <input type="text" class="form-input" placeholder="상세주소 입력" name="addressDetail" />
+                    </div>
+
+                    <div class="form-line checkbox-line">
+                        <label class="form-label-shipping"></label> <!-- label 자리 유지 -->
+                        <div class="checkbox-wrap">
+                            <input type="checkbox" id="mainYnValue" name="mainYn" value="Y"/>
+                            <label for="mainYnValue">기본 배송지로 저장</label>
+                        </div>
+                    </div>
+                    <div class="privacy">
+                        <strong>개인정보 수집 및 이용 동의</strong>
+                        <p class="desc">
+                            1. 개인정보 수집 목적 : 신규 배송지 추가, 배송정보 관리, 맞춤형 콘텐츠 및 서비스 등 제공 또는 추천
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer" style="border:none;">
+                <button class="btn btn-primary full-width" id="saveShipping">저장</button>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>
