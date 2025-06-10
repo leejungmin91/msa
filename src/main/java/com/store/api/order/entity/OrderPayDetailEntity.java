@@ -2,13 +2,9 @@ package com.store.api.order.entity;
 
 import com.store.api.member.dto.MemberResponseDto;
 import com.store.api.member.entity.MemberEntity;
-import com.store.api.order.domain.OrderCreateDomain;
 import com.store.api.order.domain.OrderResultDomain;
 import com.store.api.order.dto.OrderCancelResponseDto;
-import com.store.api.order.dto.OrderPayResponseDto;
-import com.store.common.util.CryptoService;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;

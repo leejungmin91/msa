@@ -1,15 +1,11 @@
 package com.store.api.order.repository;
 
-import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.store.api.member.entity.MemberEntity;
 import com.store.api.member.repository.MemberRepositoryCustom;
 import com.store.api.order.entity.OrderItemEntity;
 import com.store.api.order.entity.OrderStatus;
-import com.store.api.order.entity.QOrderEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

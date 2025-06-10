@@ -6,10 +6,8 @@ import com.store.api.member.entity.MemberEntity;
 import com.store.api.member.repository.MemberRepository;
 import com.store.api.member.service.MemberService;
 import com.store.api.order.domain.OrderCreateDomain;
-import com.store.api.order.dto.OrderOverviewResponseDto;
 import com.store.api.order.entity.OrderEntity;
 import com.store.api.order.repository.OrderRepository;
-import com.store.api.order.service.OrderService;
 import com.store.common.util.RedisService;
 import groovy.util.logging.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -24,13 +22,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @Slf4j
 @SpringBootTest

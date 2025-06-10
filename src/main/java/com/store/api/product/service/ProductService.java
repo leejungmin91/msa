@@ -1,22 +1,17 @@
 package com.store.api.product.service;
 
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.store.api.member.entity.MemberEntity;
 import com.store.api.member.entity.ShippingEntity;
 import com.store.api.product.domain.ProductCreateDomain;
 import com.store.api.product.domain.ProductUpdateDomain;
-import com.store.api.product.dto.ProductResponseDto;
 import com.store.api.product.entity.ProductEntity;
 import com.store.api.product.entity.ProductImageEntity;
 import com.store.api.product.repository.ProductImageRepository;
 import com.store.api.product.repository.ProductRepository;
-import com.store.common.config.security.Role;
 import com.store.common.dto.FileInfoResponse;
 import com.store.common.util.FileStorageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,13 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

@@ -1,12 +1,9 @@
 package com.store.api.order.entity;
 
 import com.store.api.member.entity.MemberEntity;
-import com.store.api.order.domain.OrderCreateDomain;
-import com.store.api.order.domain.OrderItemDomain;
 import com.store.api.order.domain.OrderPrepareDomain;
 import com.store.api.order.domain.OrderResultDomain;
 import com.store.api.order.dto.OrderCancelResponseDto;
-import com.store.api.product.entity.ProductEntity;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
 import lombok.Getter;
@@ -16,9 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 @EntityListeners(AuditingEntityListener.class)

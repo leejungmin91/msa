@@ -1,7 +1,6 @@
 package com.store.api.order.service;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.store.api.member.dto.MemberResponseDto;
 import com.store.api.member.dto.ShippingResponseDto;
