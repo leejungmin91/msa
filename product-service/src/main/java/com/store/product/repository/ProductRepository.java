@@ -1,7 +1,7 @@
-package com.store.api.product.repository;
+package com.store.product.repository;
 
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.product.entity.ProductEntity;
+import com.store.member.entity.MemberEntity;
+import com.store.product.entity.ProductEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

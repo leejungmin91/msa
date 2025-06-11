@@ -1,16 +1,16 @@
-package com.store.api.member.service;
+package com.store.member.service;
 
 
-import com.store.api.member.domain.ShippingCreateDomain;
-import com.store.api.member.domain.ShippingUpdateDomain;
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.entity.ShippingEntity;
-import com.store.api.member.repository.ShippingRepository;
+import com.store.member.domain.ShippingCreateDomain;
+import com.store.member.domain.ShippingUpdateDomain;
+import com.store.member.entity.MemberEntity;
+import com.store.member.entity.ShippingEntity;
+import com.store.member.repository.ShippingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 

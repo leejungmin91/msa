@@ -1,19 +1,19 @@
-package com.store.api.admin.controller;
+package com.store.admin.controller;
 
-import com.store.api.admin.annotation.AdminAuthorize;
-import com.store.api.admin.service.AdminService;
-import com.store.api.member.dto.MemberResponseDto;
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.service.MemberService;
-import com.store.api.order.dto.OrderInvoiceRequestDto;
-import com.store.api.order.dto.OrderResponseDto;
-import com.store.api.order.entity.OrderEntity;
-import com.store.api.order.service.OrderService;
-import com.store.api.product.domain.ProductCreateDomain;
-import com.store.api.product.domain.ProductUpdateDomain;
-import com.store.api.product.dto.ProductResponseDto;
-import com.store.api.product.entity.ProductEntity;
-import com.store.api.product.service.ProductService;
+import com.store.admin.annotation.AdminAuthorize;
+import com.store.admin.service.AdminService;
+import com.store.member.dto.MemberResponseDto;
+import com.store.member.entity.MemberEntity;
+import com.store.member.service.MemberService;
+import com.store.order.dto.OrderInvoiceRequestDto;
+import com.store.order.dto.OrderResponseDto;
+import com.store.order.entity.OrderEntity;
+import com.store.order.service.OrderService;
+import com.store.product.domain.ProductCreateDomain;
+import com.store.product.domain.ProductUpdateDomain;
+import com.store.product.dto.ProductResponseDto;
+import com.store.product.entity.ProductEntity;
+import com.store.product.service.ProductService;
 import com.store.common.dto.PageResponse;
 import com.store.common.http.ApiResponse;
 import com.store.common.util.CryptoService;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @AdminAuthorize
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/admin")
+@RequestMapping("${prefix}/admin")
 public class AdminRestController {
 
     private final AdminService adminService;

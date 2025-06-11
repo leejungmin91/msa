@@ -1,4 +1,4 @@
-package com.store.api.member.util;
+package com.store.member.util;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -6,7 +6,7 @@ import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.util.ServletRequestPathUtils;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 @RequiredArgsConstructor

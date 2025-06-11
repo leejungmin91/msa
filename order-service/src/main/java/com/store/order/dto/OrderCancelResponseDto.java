@@ -1,7 +1,7 @@
-package com.store.api.order.dto;
+package com.store.order.dto;
 
-import com.store.api.order.domain.OrderItemDomain;
-import com.store.api.order.entity.OrderPayDetailEntity;
+import com.store.order.domain.OrderItemDomain;
+import com.store.order.entity.OrderPayDetailEntity;
 import lombok.*;
 
 import java.util.List;

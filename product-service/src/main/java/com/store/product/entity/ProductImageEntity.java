@@ -1,11 +1,11 @@
-package com.store.api.product.entity;
+package com.store.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.store.common.dto.FileInfoResponse;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Getter
 @Table(name = "PRODUCT_IMAGE")

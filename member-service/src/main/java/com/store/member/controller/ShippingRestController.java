@@ -1,12 +1,12 @@
-package com.store.api.member.controller;
+package com.store.member.controller;
 
 
 import com.store.common.annotation.MemberAuthorize;
-import com.store.api.member.domain.ShippingCreateDomain;
-import com.store.api.member.domain.ShippingUpdateDomain;
-import com.store.api.member.dto.ShippingResponseDto;
-import com.store.api.member.entity.ShippingEntity;
-import com.store.api.member.service.ShippingService;
+import com.store.member.domain.ShippingCreateDomain;
+import com.store.member.domain.ShippingUpdateDomain;
+import com.store.member.dto.ShippingResponseDto;
+import com.store.member.entity.ShippingEntity;
+import com.store.member.service.ShippingService;
 import com.store.common.annotation.CurrentUser;
 import com.store.common.config.security.CustomUserDetails;
 import com.store.common.http.ApiResponse;
@@ -19,7 +19,7 @@ import java.util.List;
 @MemberAuthorize
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/shipping")
+@RequestMapping("${prefix}/shipping")
 public class ShippingRestController {
 
     private final ShippingService shippingService;

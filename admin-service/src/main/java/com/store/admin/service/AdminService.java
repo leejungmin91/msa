@@ -1,11 +1,11 @@
-package com.store.api.admin.service;
+package com.store.admin.service;
 
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.service.MemberService;
-import com.store.api.order.entity.OrderEntity;
-import com.store.api.order.service.OrderService;
-import com.store.api.product.entity.ProductEntity;
-import com.store.api.product.service.ProductService;
+import com.store.member.entity.MemberEntity;
+import com.store.member.service.MemberService;
+import com.store.order.entity.OrderEntity;
+import com.store.order.service.OrderService;
+import com.store.product.entity.ProductEntity;
+import com.store.product.service.ProductService;
 import com.store.common.config.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

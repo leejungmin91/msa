@@ -1,6 +1,6 @@
 package com.store.common.config.security;
 
-import com.store.api.member.entity.MemberEntity;
+import com.store.member.entity.MemberEntity;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

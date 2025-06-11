@@ -1,5 +1,5 @@
 package com.store.common.config;
-import com.store.api.member.util.HttpRequestEndpointChecker;
+import com.store.member.util.HttpRequestEndpointChecker;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.function.Function;

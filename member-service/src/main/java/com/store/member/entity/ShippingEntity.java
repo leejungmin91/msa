@@ -1,8 +1,8 @@
-package com.store.api.member.entity;
+package com.store.member.entity;
 
-import com.store.api.member.domain.MemberUpdateDomain;
-import com.store.api.member.domain.ShippingCreateDomain;
-import com.store.api.member.domain.ShippingUpdateDomain;
+import com.store.member.domain.MemberUpdateDomain;
+import com.store.member.domain.ShippingCreateDomain;
+import com.store.member.domain.ShippingUpdateDomain;
 import com.store.common.config.security.Role;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Getter

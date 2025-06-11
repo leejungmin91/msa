@@ -1,7 +1,7 @@
-package com.store.api.order.repository;
+package com.store.order.repository;
 
-import com.store.api.order.entity.OrderItemEntity;
-import com.store.api.order.entity.OrderStatus;
+import com.store.order.entity.OrderItemEntity;
+import com.store.order.entity.OrderStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

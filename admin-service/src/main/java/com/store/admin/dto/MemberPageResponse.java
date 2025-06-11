@@ -1,6 +1,6 @@
-package com.store.api.admin.dto;
+package com.store.admin.dto;
 
-import com.store.api.member.dto.MemberResponseDto;
+import com.store.member.dto.MemberResponseDto;
 import com.store.common.dto.PageResponse;
 import org.springframework.data.domain.Page;
 

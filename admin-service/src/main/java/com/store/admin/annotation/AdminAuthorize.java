@@ -1,4 +1,4 @@
-package com.store.api.admin.annotation;
+package com.store.admin.annotation;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 

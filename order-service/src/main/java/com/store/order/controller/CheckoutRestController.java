@@ -1,10 +1,10 @@
-package com.store.api.order.controller;
+package com.store.order.controller;
 
 
-import com.store.api.order.domain.CartDomain;
+import com.store.order.domain.CartDomain;
 import com.store.common.annotation.MemberAuthorize;
-import com.store.api.order.dto.CheckoutResponseDto;
-import com.store.api.order.service.OrderService;
+import com.store.order.dto.CheckoutResponseDto;
+import com.store.order.service.OrderService;
 import com.store.common.annotation.CurrentUser;
 import com.store.common.config.security.CustomUserDetails;
 import com.store.common.http.ApiResponse;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @MemberAuthorize
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/checkout")
+@RequestMapping("${prefix}/checkout")
 public class CheckoutRestController {
 
     private final OrderService orderService;

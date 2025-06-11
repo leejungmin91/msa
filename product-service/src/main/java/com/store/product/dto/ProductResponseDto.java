@@ -1,7 +1,7 @@
-package com.store.api.product.dto;
+package com.store.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.store.api.product.entity.ProductEntity;
+import com.store.product.entity.ProductEntity;
 import lombok.*;
 
 import java.util.Date;

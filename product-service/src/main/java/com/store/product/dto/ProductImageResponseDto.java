@@ -1,6 +1,6 @@
-package com.store.api.product.dto;
+package com.store.product.dto;
 
-import com.store.api.product.entity.ProductImageEntity;
+import com.store.product.entity.ProductImageEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

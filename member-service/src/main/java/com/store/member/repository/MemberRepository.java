@@ -1,6 +1,6 @@
-package com.store.api.member.repository;
+package com.store.member.repository;
 
-import com.store.api.member.entity.MemberEntity;
+import com.store.member.entity.MemberEntity;
 import com.store.common.config.security.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

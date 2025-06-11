@@ -1,4 +1,4 @@
-package com.store.api.product.domain;
+package com.store.product.domain;
 
 import lombok.Builder;
 import org.springframework.web.bind.annotation.RequestParam;

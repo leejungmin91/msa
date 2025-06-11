@@ -1,7 +1,7 @@
-package com.store.api.product.repository;
+package com.store.product.repository;
 
-import com.store.api.product.entity.ProductEntity;
-import com.store.api.product.entity.ProductImageEntity;
+import com.store.product.entity.ProductEntity;
+import com.store.product.entity.ProductImageEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

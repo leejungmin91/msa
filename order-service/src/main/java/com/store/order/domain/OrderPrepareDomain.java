@@ -1,4 +1,4 @@
-package com.store.api.order.domain;
+package com.store.order.domain;
 
 import com.store.common.util.DataEncrypt;
 import lombok.Builder;

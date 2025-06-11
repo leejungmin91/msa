@@ -1,7 +1,7 @@
-package com.store.api.order.dto;
+package com.store.order.dto;
 
-import com.store.api.order.entity.OrderEntity;
-import com.store.api.order.entity.OrderItemEntity;
+import com.store.order.entity.OrderEntity;
+import com.store.order.entity.OrderItemEntity;
 import lombok.Builder;
 import lombok.Getter;
 

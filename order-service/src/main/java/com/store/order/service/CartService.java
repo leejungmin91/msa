@@ -1,9 +1,9 @@
-package com.store.api.order.service;
+package com.store.order.service;
 
-import com.store.api.order.domain.CartDomain;
-import com.store.api.order.dto.CartItemResponseDto;
-import com.store.api.product.entity.ProductEntity;
-import com.store.api.product.service.ProductService;
+import com.store.order.domain.CartDomain;
+import com.store.order.dto.CartItemResponseDto;
+import com.store.product.entity.ProductEntity;
+import com.store.product.service.ProductService;
 import com.store.common.util.RedisService;
 import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
-package com.store.api.order.dto;
+package com.store.order.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.store.api.product.entity.ProductEntity;
+import com.store.product.entity.ProductEntity;
 import lombok.*;
 
 @Getter

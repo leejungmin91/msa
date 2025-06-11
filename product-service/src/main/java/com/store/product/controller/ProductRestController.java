@@ -1,22 +1,22 @@
-package com.store.api.product.controller;
+package com.store.product.controller;
 
 
-import com.store.api.product.entity.ProductEntity;
+import com.store.product.entity.ProductEntity;
 import com.store.common.http.ApiResponse;
-import com.store.api.product.domain.ProductCreateDomain;
-import com.store.api.product.domain.ProductUpdateDomain;
-import com.store.api.product.dto.ProductResponseDto;
-import com.store.api.product.service.ProductService;
+import com.store.product.domain.ProductCreateDomain;
+import com.store.product.domain.ProductUpdateDomain;
+import com.store.product.dto.ProductResponseDto;
+import com.store.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/product")
+@RequestMapping("${prefix}/product")
 public class ProductRestController {
 
     private final ProductService productService;

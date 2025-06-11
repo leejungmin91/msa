@@ -1,22 +1,22 @@
-package com.store.api.order.controller;
+package com.store.order.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.store.api.order.domain.OrderPrepareDomain;
-import com.store.api.order.domain.OrderResultDomain;
-import com.store.api.order.entity.OrderPayDetailEntity;
+import com.store.order.domain.OrderPrepareDomain;
+import com.store.order.domain.OrderResultDomain;
+import com.store.order.entity.OrderPayDetailEntity;
 import com.store.common.annotation.MemberAuthorize;
-import com.store.api.order.domain.OrderSearchDomain;
-import com.store.api.order.dto.*;
-import com.store.api.order.entity.OrderEntity;
+import com.store.order.domain.OrderSearchDomain;
+import com.store.order.dto.*;
+import com.store.order.entity.OrderEntity;
 import com.store.common.annotation.CurrentUser;
 import com.store.common.annotation.SkipAuthorize;
 import com.store.common.config.security.CustomUserDetails;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
 import com.store.common.http.ApiResponse;
-import com.store.api.order.domain.OrderCreateDomain;
-import com.store.api.order.service.OrderService;
+import com.store.order.domain.OrderCreateDomain;
+import com.store.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ import java.util.Optional;
 @MemberAuthorize
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/order")
+@RequestMapping("${prefix}/order")
 public class OrderRestController {
 
     private final OrderService orderService;

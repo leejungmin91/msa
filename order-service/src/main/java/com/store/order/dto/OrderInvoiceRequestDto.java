@@ -1,4 +1,4 @@
-package com.store.api.order.dto;
+package com.store.order.dto;
 
 import lombok.*;
 

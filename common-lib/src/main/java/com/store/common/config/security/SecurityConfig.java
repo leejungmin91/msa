@@ -32,7 +32,7 @@ public class SecurityConfig {
     private final AuthenticationEntryPoint entryPoint;
     private final AuthenticationConfig authenticationConfig;
 
-    @Value("${api.prefix}")
+    @Value("${prefix}")
     private String apiPrefix;
 
     @Value("${spring.profiles.active}")

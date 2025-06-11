@@ -1,7 +1,7 @@
-package com.store.api.member.dto;
+package com.store.member.dto;
 
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.entity.ShippingEntity;
+import com.store.member.entity.MemberEntity;
+import com.store.member.entity.ShippingEntity;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 

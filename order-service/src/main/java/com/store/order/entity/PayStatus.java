@@ -1,4 +1,4 @@
-package com.store.api.order.entity;
+package com.store.order.entity;
 
 import lombok.Getter;
 

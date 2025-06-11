@@ -1,7 +1,7 @@
 package com.store.common.config.security;
 
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.repository.MemberRepository;
+import com.store.member.entity.MemberEntity;
+import com.store.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

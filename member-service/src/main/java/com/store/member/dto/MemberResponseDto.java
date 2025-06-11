@@ -1,19 +1,12 @@
-package com.store.api.member.dto;
+package com.store.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.order.dto.OrderResponseDto;
-import com.store.api.order.entity.OrderEntity;
-import com.store.common.config.security.Role;
-import com.store.common.util.CryptoService;
-import lombok.Builder;
+import com.store.member.entity.MemberEntity;
+import com.store.member.util.CryptoService;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
-import org.jasypt.util.text.BasicTextEncryptor;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @SuperBuilder

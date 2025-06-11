@@ -1,16 +1,16 @@
-package com.store.api.order.entity;
+package com.store.order.entity;
 
-import com.store.api.order.domain.OrderCreateDomain;
-import com.store.api.order.domain.OrderItemDomain;
-import com.store.api.order.domain.OrderPrepareDomain;
-import com.store.api.order.dto.OrderDetailResponseDto;
-import com.store.api.order.dto.OrderInvoiceRequestDto;
-import com.store.api.product.entity.ProductEntity;
+import com.store.order.domain.OrderCreateDomain;
+import com.store.order.domain.OrderItemDomain;
+import com.store.order.domain.OrderPrepareDomain;
+import com.store.order.dto.OrderDetailResponseDto;
+import com.store.order.dto.OrderInvoiceRequestDto;
+import com.store.product.entity.ProductEntity;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

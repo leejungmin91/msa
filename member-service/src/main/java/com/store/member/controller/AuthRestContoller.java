@@ -1,50 +1,46 @@
-package com.store.api.member.controller;
+package com.store.member.controller;
 
-
-import com.store.api.admin.annotation.AdminAuthorize;
-import com.store.api.member.dto.CheckResponseDto;
-import com.store.api.order.dto.CartItemResponseDto;
-import com.store.api.order.service.CartService;
-import com.store.common.annotation.CurrentUser;
-import com.store.common.config.security.CustomUserDetails;
 import com.store.common.http.ApiResponse;
-import com.store.api.member.domain.SignInDomain;
-import com.store.api.member.service.AuthenticationService;
+import com.store.member.annotation.CurrentUser;
+import com.store.member.config.security.CustomUserDetails;
+import com.store.member.domain.SignInDomain;
+import com.store.member.dto.CheckResponseDto;
+import com.store.member.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.store.common.http.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/auth")
+@RequestMapping("${prefix}/auth")
 public class AuthRestContoller {
 
     private final AuthenticationService authenticationService;
-    private final CartService cartService;
+    //private final CartService cartService;
 
     @GetMapping("/check")
     public ResponseEntity<ApiResponse> check(@CurrentUser CustomUserDetails user){
-        List<CartItemResponseDto> cart = cartService.getCart(user.getId());
+        //List<CartItemResponseDto> cart = cartService.getCart(user.getId());
         String role = user.getAuthorities()
                 .iterator()
                 .next()
                 .getAuthority();
-        CheckResponseDto checkResponseDto = CheckResponseDto.create(cart.size(), role);
+        //CheckResponseDto checkResponseDto = CheckResponseDto.create(cart.size(), role);
         return ResponseEntity.ok()
-                .body(ApiResponse.success(checkResponseDto));
+                .body(ApiResponse.success(/*checkResponseDto*/));
     }
 
-    @AdminAuthorize
+    /*@AdminAuthorize
     @GetMapping("/check-admin")
     public ResponseEntity<ApiResponse> checkAdmin(@CurrentUser CustomUserDetails user){
         return ResponseEntity.ok()
                 .body(ApiResponse.success());
-    }
+    }*/
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> login(@RequestBody SignInDomain signInDomain) {

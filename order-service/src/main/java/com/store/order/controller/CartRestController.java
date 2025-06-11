@@ -1,10 +1,10 @@
-package com.store.api.order.controller;
+package com.store.order.controller;
 
 
 import com.store.common.annotation.MemberAuthorize;
-import com.store.api.order.domain.CartDomain;
-import com.store.api.order.dto.CartItemResponseDto;
-import com.store.api.order.service.CartService;
+import com.store.order.domain.CartDomain;
+import com.store.order.dto.CartItemResponseDto;
+import com.store.order.service.CartService;
 import com.store.common.annotation.CurrentUser;
 import com.store.common.config.security.CustomUserDetails;
 import com.store.common.http.ApiResponse;
@@ -17,7 +17,7 @@ import java.util.List;
 @MemberAuthorize
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/cart")
+@RequestMapping("${prefix}/cart")
 public class CartRestController {
 
     private final CartService cartService;

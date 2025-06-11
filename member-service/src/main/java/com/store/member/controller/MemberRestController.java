@@ -1,23 +1,22 @@
-package com.store.api.member.controller;
+package com.store.member.controller;
 
 
-import com.store.api.member.domain.MemberSignUpDomain;
-import com.store.api.member.domain.MemberUpdateDomain;
-import com.store.api.member.dto.MemberResponseDto;
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.service.MemberService;
+import com.store.member.domain.MemberSignUpDomain;
+import com.store.member.domain.MemberUpdateDomain;
+import com.store.member.dto.MemberResponseDto;
+import com.store.member.entity.MemberEntity;
+import com.store.member.service.MemberService;
 import com.store.common.annotation.CurrentUser;
 import com.store.common.config.security.CustomUserDetails;
 import com.store.common.http.ApiResponse;
-import com.store.common.util.CryptoService;
+import com.store.member.util.CryptoService;
 import lombok.RequiredArgsConstructor;
-import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/member")
+@RequestMapping("${prefix}/member")
 public class MemberRestController {
 
     private final MemberService memberService;

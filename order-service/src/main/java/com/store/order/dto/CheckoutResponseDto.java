@@ -1,7 +1,7 @@
-package com.store.api.order.dto;
+package com.store.order.dto;
 
-import com.store.api.member.dto.MemberResponseDto;
-import com.store.api.member.dto.ShippingResponseDto;
+import com.store.member.dto.MemberResponseDto;
+import com.store.member.dto.ShippingResponseDto;
 import lombok.*;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.store.common.config;
 
-import com.store.api.admin.config.AdminAccessInterceptor;
+import com.store.admin.config.AdminAccessInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

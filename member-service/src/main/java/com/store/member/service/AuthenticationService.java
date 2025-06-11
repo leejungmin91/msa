@@ -1,11 +1,9 @@
-package com.store.api.member.service;
+package com.store.member.service;
 
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.repository.MemberRepository;
-import com.store.common.config.JwtTokenProvider;
-import com.store.api.member.domain.SignInDomain;
-import com.store.common.config.security.CustomUserDetails;
-import com.store.common.util.RedisService;
+import com.store.member.config.JwtTokenProvider;
+import com.store.member.domain.SignInDomain;
+import com.store.member.util.RedisService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,12 +12,8 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 

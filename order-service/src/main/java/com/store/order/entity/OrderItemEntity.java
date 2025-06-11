@@ -1,10 +1,10 @@
-package com.store.api.order.entity;
+package com.store.order.entity;
 
-import com.store.api.order.domain.OrderItemDomain;
-import com.store.api.product.entity.ProductEntity;
+import com.store.order.domain.OrderItemDomain;
+import com.store.product.entity.ProductEntity;
 import lombok.Getter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Getter
 @Entity

@@ -1,11 +1,11 @@
-package com.store.api.member.service;
+package com.store.member.service;
 
 
-import com.store.api.member.domain.MemberSignUpDomain;
-import com.store.api.member.domain.MemberUpdateDomain;
-import com.store.api.member.dto.MemberResponseDto;
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.repository.MemberRepository;
+import com.store.member.domain.MemberSignUpDomain;
+import com.store.member.domain.MemberUpdateDomain;
+import com.store.member.dto.MemberResponseDto;
+import com.store.member.entity.MemberEntity;
+import com.store.member.repository.MemberRepository;
 import com.store.common.config.security.Role;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RequiredArgsConstructor

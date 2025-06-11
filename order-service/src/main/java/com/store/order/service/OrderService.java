@@ -1,17 +1,17 @@
-package com.store.api.order.service;
+package com.store.order.service;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.store.api.member.dto.MemberResponseDto;
-import com.store.api.member.dto.ShippingResponseDto;
-import com.store.api.member.service.MemberService;
-import com.store.api.member.service.ShippingService;
-import com.store.api.order.config.KisaProperties;
-import com.store.api.order.domain.*;
-import com.store.api.order.dto.*;
-import com.store.api.order.entity.*;
-import com.store.api.order.repository.OrderRepository;
-import com.store.api.product.service.ProductService;
+import com.store.member.dto.MemberResponseDto;
+import com.store.member.dto.ShippingResponseDto;
+import com.store.member.service.MemberService;
+import com.store.member.service.ShippingService;
+import com.store.order.config.KisaProperties;
+import com.store.order.domain.*;
+import com.store.order.dto.*;
+import com.store.order.entity.*;
+import com.store.order.repository.OrderRepository;
+import com.store.product.service.ProductService;
 import com.store.common.config.security.CustomUserDetails;
 import com.store.common.config.security.Role;
 import com.store.common.exception.ApiException;
@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 //import org.springframework.web.reactive.function.client.WebClient;
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;

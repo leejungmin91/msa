@@ -1,12 +1,12 @@
-package com.store.api.order.controller;
+package com.store.order.controller;
 
 
-import com.store.api.order.domain.OrderPrepareDomain;
-import com.store.api.order.domain.OrderSearchDomain;
-import com.store.api.order.dto.OrderOverviewResponseDto;
-import com.store.api.order.dto.OrderResponseDto;
-import com.store.api.order.entity.OrderEntity;
-import com.store.api.order.service.OrderService;
+import com.store.order.domain.OrderPrepareDomain;
+import com.store.order.domain.OrderSearchDomain;
+import com.store.order.dto.OrderOverviewResponseDto;
+import com.store.order.dto.OrderResponseDto;
+import com.store.order.entity.OrderEntity;
+import com.store.order.service.OrderService;
 import com.store.common.annotation.CurrentUser;
 import com.store.common.annotation.MemberAuthorize;
 import com.store.common.annotation.SkipAuthorize;
@@ -21,15 +21,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.Writer;
 import java.net.URLEncoder;
 import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("${api.prefix}/order")
+@RequestMapping("${prefix}/order")
 public class OrderCallbackController {
 
     private final OrderService orderService;

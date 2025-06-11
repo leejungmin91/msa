@@ -1,6 +1,7 @@
-package com.store.api.member.repository;
+/*
+package com.store.member.repository;
 
-import com.store.api.member.entity.MemberEntity;
+import com.store.member.entity.MemberEntity;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-import static com.store.api.member.entity.QMemberEntity.memberEntity;
-import static com.store.api.order.entity.QOrderEntity.orderEntity;
+import static com.store.member.entity.QMemberEntity.memberEntity;
+import static com.store.order.entity.QOrderEntity.orderEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -29,3 +30,4 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
         return email != null ? memberEntity.email.eq(email) : null;
     }
 }
+*/

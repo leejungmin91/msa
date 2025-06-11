@@ -1,4 +1,4 @@
-package com.store.api.member.domain;
+package com.store.member.domain;
 
 import lombok.Builder;
 

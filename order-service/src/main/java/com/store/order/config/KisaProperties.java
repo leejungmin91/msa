@@ -1,4 +1,4 @@
-package com.store.api.order.config;
+package com.store.order.config;
 
 import lombok.Getter;
 import lombok.Setter;

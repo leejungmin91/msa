@@ -1,14 +1,14 @@
-package com.store.api.product.service;
+package com.store.product.service;
 
 
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.entity.ShippingEntity;
-import com.store.api.product.domain.ProductCreateDomain;
-import com.store.api.product.domain.ProductUpdateDomain;
-import com.store.api.product.entity.ProductEntity;
-import com.store.api.product.entity.ProductImageEntity;
-import com.store.api.product.repository.ProductImageRepository;
-import com.store.api.product.repository.ProductRepository;
+import com.store.member.entity.MemberEntity;
+import com.store.member.entity.ShippingEntity;
+import com.store.product.domain.ProductCreateDomain;
+import com.store.product.domain.ProductUpdateDomain;
+import com.store.product.entity.ProductEntity;
+import com.store.product.entity.ProductImageEntity;
+import com.store.product.repository.ProductImageRepository;
+import com.store.product.repository.ProductRepository;
 import com.store.common.dto.FileInfoResponse;
 import com.store.common.util.FileStorageService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 

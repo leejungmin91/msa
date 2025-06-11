@@ -1,6 +1,6 @@
-package com.store.api.product.domain;
+package com.store.product.domain;
 
-import com.store.api.product.entity.ProductImageEntity;
+import com.store.product.entity.ProductImageEntity;
 import lombok.Builder;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;

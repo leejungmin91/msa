@@ -15,7 +15,7 @@ import java.util.List;
 public class SecurityProperties {
     private List<String> excludeUrls;
 
-    @Value("${api.prefix}")
+    @Value("${prefix}")
     private String apiPrefix;
 
     public boolean checkExcludeUrls(String requestUrl) {

@@ -1,7 +1,7 @@
-package com.store.api.product.entity;
+package com.store.product.entity;
 
-import com.store.api.product.domain.ProductCreateDomain;
-import com.store.api.product.domain.ProductUpdateDomain;
+import com.store.product.domain.ProductCreateDomain;
+import com.store.product.domain.ProductUpdateDomain;
 import com.store.common.dto.FileInfoResponse;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
@@ -9,7 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

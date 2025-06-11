@@ -1,6 +1,6 @@
-package com.store.api.member.repository;
+package com.store.member.repository;
 
-import com.store.api.member.entity.ShippingEntity;
+import com.store.member.entity.ShippingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

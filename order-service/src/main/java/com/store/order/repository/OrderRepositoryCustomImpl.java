@@ -1,11 +1,11 @@
-package com.store.api.order.repository;
+package com.store.order.repository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.member.repository.MemberRepositoryCustom;
-import com.store.api.order.entity.OrderItemEntity;
-import com.store.api.order.entity.OrderStatus;
+import com.store.member.entity.MemberEntity;
+import com.store.member.repository.MemberRepositoryCustom;
+import com.store.order.entity.OrderItemEntity;
+import com.store.order.entity.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,11 +15,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.store.api.order.entity.QOrderDetailEntity.orderDetailEntity;
-import static com.store.api.order.entity.QOrderEntity.orderEntity;
-import static com.store.api.order.entity.QOrderItemEntity.orderItemEntity;
-import static com.store.api.order.entity.QOrderPayDetailEntity.orderPayDetailEntity;
-import static com.store.api.product.entity.QProductEntity.productEntity;
+import static com.store.order.entity.QOrderDetailEntity.orderDetailEntity;
+import static com.store.order.entity.QOrderEntity.orderEntity;
+import static com.store.order.entity.QOrderItemEntity.orderItemEntity;
+import static com.store.order.entity.QOrderPayDetailEntity.orderPayDetailEntity;
+import static com.store.product.entity.QProductEntity.productEntity;
 
 @Repository
 @RequiredArgsConstructor

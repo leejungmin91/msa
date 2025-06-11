@@ -1,9 +1,9 @@
-package com.store.api.order.entity;
+package com.store.order.entity;
 
-import com.store.api.member.entity.MemberEntity;
-import com.store.api.order.domain.OrderPrepareDomain;
-import com.store.api.order.domain.OrderResultDomain;
-import com.store.api.order.dto.OrderCancelResponseDto;
+import com.store.member.entity.MemberEntity;
+import com.store.order.domain.OrderPrepareDomain;
+import com.store.order.domain.OrderResultDomain;
+import com.store.order.dto.OrderCancelResponseDto;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.*;
 

@@ -1,6 +1,6 @@
-package com.store.api.order.dto;
+package com.store.order.dto;
 
-import com.store.api.order.entity.OrderStatus;
+import com.store.order.entity.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

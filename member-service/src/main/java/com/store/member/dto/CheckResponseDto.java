@@ -1,7 +1,5 @@
-package com.store.api.member.dto;
+package com.store.member.dto;
 
-import com.store.api.member.entity.MemberEntity;
-import com.store.common.config.security.Role;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
