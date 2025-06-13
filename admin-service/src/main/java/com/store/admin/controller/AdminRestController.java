@@ -14,7 +14,6 @@ import com.store.product.domain.ProductUpdateDomain;
 import com.store.product.dto.ProductResponseDto;
 import com.store.product.entity.ProductEntity;
 import com.store.product.service.ProductService;
-import com.store.common.dto.PageResponse;
 import com.store.common.http.ApiResponse;
 import com.store.common.util.CryptoService;
 import lombok.RequiredArgsConstructor;
