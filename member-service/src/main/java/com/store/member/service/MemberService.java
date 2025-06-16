@@ -1,16 +1,18 @@
 package com.store.member.service;
 
 
-import com.store.member.domain.MemberSignUpDomain;
-import com.store.member.domain.MemberUpdateDomain;
-import com.store.member.dto.MemberResponseDto;
-import com.store.member.entity.MemberEntity;
-import com.store.member.repository.MemberRepository;
-import com.store.common.config.security.Role;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
+import com.store.member.config.security.Role;
+import com.store.member.domain.MemberSignUpDomain;
+import com.store.member.domain.MemberUpdateDomain;
+import com.store.member.entity.MemberEntity;
+import com.store.member.event.SignupEvent;
+import com.store.member.repository.MemberRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.jasypt.util.text.BasicTextEncryptor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -30,6 +31,8 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final BasicTextEncryptor basicTextEncryptor;
+
+    private final ApplicationEventPublisher eventPublisher;
 
     public List<MemberEntity> getAll() {
         return memberRepository.findAll();
@@ -64,7 +67,17 @@ public class MemberService {
     public MemberEntity register(MemberSignUpDomain memberSignUpDomain) {
         MemberEntity member = MemberEntity.signUp(memberSignUpDomain, passwordEncoder.encode(memberSignUpDomain.password()), basicTextEncryptor.encrypt(memberSignUpDomain.phone()));
         duplicateMemberCheck(member.getEmail());
-        return memberRepository.save(member);
+
+        MemberEntity savedMember = memberRepository.save(member);
+
+        SignupEvent signupEvent = SignupEvent.builder()
+                .name(savedMember.getName())
+                .email(savedMember.getEmail())
+                .build();
+
+        eventPublisher.publishEvent(signupEvent);
+
+        return savedMember;
     }
 
     @Transactional(rollbackFor = Exception.class)

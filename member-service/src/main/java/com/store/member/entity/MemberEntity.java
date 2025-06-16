@@ -1,6 +1,6 @@
 package com.store.member.entity;
 
-import com.store.common.config.security.Role;
+import com.store.member.config.security.Role;
 import com.store.member.domain.MemberSignUpDomain;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

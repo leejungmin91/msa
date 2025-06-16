@@ -1,7 +1,7 @@
 package com.store.member.repository;
 
+import com.store.member.config.security.Role;
 import com.store.member.entity.MemberEntity;
-import com.store.common.config.security.Role;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
 dependencies {
-    // 여기에 공통 DTO, util, exception 등 정의
-
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
 }
