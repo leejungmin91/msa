@@ -1,6 +1,6 @@
 package com.store.member.config;
 
-import com.store.common.config.security.SecurityProperties;
+import com.store.member.config.security.SecurityProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<MemberEntity, Long>, MemberRepositoryCustom {
+public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
     Optional<MemberEntity> findByEmail(String email);
     boolean existsByEmail(String email);
     Page<MemberEntity> findAll(Pageable pageable);

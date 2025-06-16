@@ -1,7 +1,7 @@
 package com.store.member.config;
 
-import com.store.common.config.security.CustomUserDetails;
-import com.store.common.util.RedisService;
+import com.store.member.config.security.CustomUserDetails;
+import com.store.member.util.RedisService;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${prefix}/auth")
+@RequestMapping("${api.prefix}/auth")
 public class AuthRestContoller {
 
     private final AuthenticationService authenticationService;

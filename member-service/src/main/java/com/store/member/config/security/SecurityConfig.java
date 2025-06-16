@@ -1,6 +1,6 @@
 package com.store.member.config.security;
 
-import com.store.common.config.JwtAuthorizationFilter;
+import com.store.member.config.JwtAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,7 +30,7 @@ public class SecurityConfig {
     private final AuthenticationEntryPoint entryPoint;
     private final AuthenticationConfig authenticationConfig;
 
-    @Value("${prefix}")
+    @Value("${api.prefix}")
     private String apiPrefix;
 
     @Value("${spring.profiles.active}")
@@ -58,16 +58,14 @@ public class SecurityConfig {
         return http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request ->
                         request
-                                .antMatchers(HttpMethod.POST, apiPrefix + "/member/signup").permitAll()
-                                .antMatchers(apiPrefix + "/member/**").authenticated()
-                                .antMatchers(apiPrefix + "/admin/**").authenticated()
-                                .antMatchers(HttpMethod.POST, apiPrefix + "/order").permitAll()
-                                .antMatchers(apiPrefix + "/order/**").authenticated()
+                                .requestMatchers(HttpMethod.POST, apiPrefix + "/member/signup").permitAll()
+                                .requestMatchers(apiPrefix + "/member/**").authenticated()
                                 .anyRequest().permitAll()
                 )
                 .exceptionHandling(handler -> handler.authenticationEntryPoint(entryPoint))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .build();
+
     }
 }

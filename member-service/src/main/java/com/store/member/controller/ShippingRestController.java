@@ -1,14 +1,14 @@
 package com.store.member.controller;
 
 
-import com.store.common.annotation.MemberAuthorize;
+import com.store.member.annotation.CurrentUser;
+import com.store.member.annotation.MemberAuthorize;
+import com.store.member.config.security.CustomUserDetails;
 import com.store.member.domain.ShippingCreateDomain;
 import com.store.member.domain.ShippingUpdateDomain;
 import com.store.member.dto.ShippingResponseDto;
 import com.store.member.entity.ShippingEntity;
 import com.store.member.service.ShippingService;
-import com.store.common.annotation.CurrentUser;
-import com.store.common.config.security.CustomUserDetails;
 import com.store.common.http.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.List;
 @MemberAuthorize
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("${prefix}/shipping")
+@RequestMapping("${api.prefix}/shipping")
 public class ShippingRestController {
 
     private final ShippingService shippingService;

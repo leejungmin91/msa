@@ -1,8 +1,8 @@
 package com.store.member.config.aop;
 
-import com.store.common.annotation.SkipAuthorize;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
+import com.store.member.annotation.SkipAuthorize;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 @RequiredArgsConstructor
 public class MemberAuthorizeAspect {
 
-    @Around("@annotation(com.store.common.annotation.MemberAuthorize) || @within(com.store.common.annotation.MemberAuthorize)")
+    @Around("@annotation(com.store.member.annotation.MemberAuthorize) || @within(com.store.member.annotation.MemberAuthorize)")
     public Object checkMemberRole(ProceedingJoinPoint joinPoint) throws Throwable {
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

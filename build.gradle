@@ -28,9 +28,13 @@ subprojects {
     targetCompatibility = '21'
 
     dependencies {
-        compileOnly 'org.projectlombok:lombok'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+        implementation 'org.springframework.kafka:spring-kafka'
+        implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
         implementation 'org.springframework.boot:spring-boot-starter-webflux'
     }
 }

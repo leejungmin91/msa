@@ -21,14 +21,11 @@ import java.time.Duration;
 @Configuration
 public class RedisConfig {
 
-    @Value("${spring.redis.host}")
+    @Value("${spring.data.redis.host}")
     private String redisHost;
 
-    @Value("${spring.redis.port}")
+    @Value("${spring.data.redis.port}")
     private int redisPort;
-
-    @Value("${spring.redis.password}")
-    private String redisPassword;
 
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
@@ -39,7 +36,6 @@ public class RedisConfig {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
         config.setHostName(redisHost);
         config.setPort(redisPort);
-        config.setPassword(redisPassword);
 
         return new LettuceConnectionFactory(config, clientConfig);
     }
