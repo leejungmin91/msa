@@ -28,7 +28,7 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
-        spring.json.trusted.packages: "com.store.notification.model.*"
+        spring.json.trusted.packages: "com.store.common.event"
     listener:
       missing-topics-fatal: false
 

@@ -1,6 +1,6 @@
 package com.store.member.config;
 
-import com.store.member.event.SignupEvent;
+import com.store.common.event.SignupEvent;
 import com.store.member.producer.SignupProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

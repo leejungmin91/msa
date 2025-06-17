@@ -1,6 +1,6 @@
 package com.store.member.producer;
 
-import com.store.member.event.SignupEvent;
+import com.store.common.event.SignupEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;

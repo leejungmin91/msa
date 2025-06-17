@@ -1,6 +1,6 @@
 package com.store.notification.domain.notification.service
 
-import com.store.notification.domain.notification.model.SignupEvent
+import com.store.common.event.SignupEvent
 import com.store.notification.domain.notification.port.EmailSenderPort
 import org.springframework.stereotype.Service
 

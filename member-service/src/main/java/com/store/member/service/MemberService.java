@@ -1,13 +1,13 @@
 package com.store.member.service;
 
 
+import com.store.common.event.SignupEvent;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
 import com.store.member.config.security.Role;
 import com.store.member.domain.MemberSignUpDomain;
 import com.store.member.domain.MemberUpdateDomain;
 import com.store.member.entity.MemberEntity;
-import com.store.member.event.SignupEvent;
 import com.store.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
