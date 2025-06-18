@@ -13,7 +13,10 @@ public class SignupProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(SignupEvent event) {
-        kafkaTemplate.send("user.signup", event);
-        log.info("✅ Kafka 전송 완료: {}", event.email());
+        kafkaTemplate.send("user.signup", event)
+                .whenComplete((result, ex) -> {
+                    if(ex != null) log.error("Kafka 전송 실패", ex);
+                });
+        log.info("Kafka 전송 완료: {}", event.email());
     }
 }
