@@ -6,7 +6,7 @@ import com.store.order.domain.CartDomain;
 import com.store.order.dto.CartItemResponseDto;
 import com.store.order.service.CartService;
 import com.store.common.annotation.CurrentUser;
-import com.store.common.config.security.CustomUserDetails;
+import com.store.common.util.security.CustomUserDetails;
 import com.store.common.http.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -11,7 +11,7 @@ import com.store.order.dto.*;
 import com.store.order.entity.OrderEntity;
 import com.store.common.annotation.CurrentUser;
 import com.store.common.annotation.SkipAuthorize;
-import com.store.common.config.security.CustomUserDetails;
+import com.store.common.util.security.CustomUserDetails;
 import com.store.common.exception.ApiException;
 import com.store.common.http.ApiCode;
 import com.store.common.http.ApiResponse;

@@ -1,6 +1,7 @@
 package com.store.member.producer;
 
 import com.store.common.event.SignupEvent;
+import com.store.common.util.KafkaUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,10 +14,7 @@ public class SignupProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(SignupEvent event) {
-        kafkaTemplate.send("user.signup", event)
-                .whenComplete((result, ex) -> {
-                    if(ex != null) log.error("Kafka 전송 실패", ex);
-                });
+        KafkaUtils.sendWithErrorHandler(kafkaTemplate, "user.signup", event);
         log.info("Kafka 전송 완료: {}", event.email());
     }
 }

@@ -6,7 +6,7 @@ import com.store.order.entity.OrderEntity;
 import com.store.order.service.OrderService;
 import com.store.product.entity.ProductEntity;
 import com.store.product.service.ProductService;
-import com.store.common.config.security.Role;
+import com.store.common.util.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;

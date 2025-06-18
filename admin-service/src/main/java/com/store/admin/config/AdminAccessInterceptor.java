@@ -1,6 +1,6 @@
 package com.store.admin.config;
 
-import com.store.common.config.JwtTokenProvider;
+import com.store.common.util.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
