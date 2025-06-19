@@ -5,8 +5,6 @@
 rootProject.name = 'store'
 
 include 'common-lib'
-//include 'admin-service'
 include 'member-service'
-//include 'order-service'
-//include 'product-service'
+include 'point-service'
 include 'notification-service'

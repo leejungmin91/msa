@@ -13,7 +13,7 @@ class SignupEventConsumer(
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    @KafkaListener(topics = ["user.signup"], groupId = "notification-group")
+    @KafkaListener(topics = ["user.signup.mail"], groupId = "notification-group")
     fun consume(event: SignupEvent) {
         try {
             log.info("kafka message received $event")

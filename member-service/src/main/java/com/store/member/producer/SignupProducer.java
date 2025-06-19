@@ -14,7 +14,8 @@ public class SignupProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public void send(SignupEvent event) {
-        KafkaUtils.sendWithErrorHandler(kafkaTemplate, "user.signup", event);
+        KafkaUtils.sendWithErrorHandler(kafkaTemplate, "user.signup.mail", event);
+        KafkaUtils.sendWithErrorHandler(kafkaTemplate, "user.signup.point", event);
         log.info("Kafka 전송 완료: {}", event.email());
     }
 }

@@ -71,6 +71,7 @@ public class MemberService {
         MemberEntity savedMember = memberRepository.save(member);
 
         SignupEvent signupEvent = SignupEvent.builder()
+                .id(savedMember.getId())
                 .name(savedMember.getName())
                 .email(savedMember.getEmail())
                 .build();
