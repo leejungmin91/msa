@@ -1,6 +1,7 @@
 package com.store.point.consumer;
 
 import com.store.common.event.SignupEvent;
+import com.store.point.domain.PointSaveDomain;
 import com.store.point.service.PointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ public class SignupEventConsumer {
     public void consume(SignupEvent signupEvent) {
         // 회원가입 성공!
         log.info("signup success: {}", signupEvent.toString());
-        pointService.savePoint(signupEvent);
+        PointSaveDomain pointSaveDomain = new PointSaveDomain(signupEvent.id(), 1000L, "회원가입 시 지급되는 포인트", "signup");
+        pointService.savePoint(pointSaveDomain);
     }
 }
