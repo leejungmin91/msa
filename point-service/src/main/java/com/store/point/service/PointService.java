@@ -1,18 +1,13 @@
 package com.store.point.service;
 
-import com.store.common.event.SignupEvent;
 import com.store.point.domain.PointHistoryDomain;
 import com.store.point.domain.PointSaveDomain;
+import com.store.point.dto.PointDto;
 import com.store.point.entity.PointEntity;
-import com.store.point.entity.PointHistoryEntity;
-import com.store.point.repository.PointHistoryRepository;
 import com.store.point.repository.PointRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
@@ -22,6 +17,13 @@ public class PointService {
 
     private final PointRepository pointRepository;
     private final PointHistoryService pointHistoryService;
+
+    public PointDto getUserPoint(Long userId) {
+        PointEntity pointEntity = pointRepository.findByUserId(userId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return PointDto.from(pointEntity);
+    }
 
     @Transactional
     public void savePoint(PointSaveDomain pointSaveDomain) {
