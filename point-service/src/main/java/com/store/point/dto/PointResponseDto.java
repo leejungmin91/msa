@@ -6,12 +6,12 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class PointDto {
+public class PointResponseDto {
     private Long userId;
     private Long point;
 
-    public static PointDto from(PointEntity pointEntity) {
-        return PointDto.builder()
+    public static PointResponseDto from(PointEntity pointEntity) {
+        return PointResponseDto.builder()
                 .userId(pointEntity.getUserId())
                 .point(pointEntity.getPoint())
                 .build();

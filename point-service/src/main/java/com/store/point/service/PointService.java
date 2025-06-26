@@ -2,7 +2,7 @@ package com.store.point.service;
 
 import com.store.point.domain.PointHistoryDomain;
 import com.store.point.domain.PointSaveDomain;
-import com.store.point.dto.PointDto;
+import com.store.point.dto.PointResponseDto;
 import com.store.point.entity.PointEntity;
 import com.store.point.repository.PointRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,11 +18,11 @@ public class PointService {
     private final PointRepository pointRepository;
     private final PointHistoryService pointHistoryService;
 
-    public PointDto getUserPoint(Long userId) {
+    public PointResponseDto getUserPoint(Long userId) {
         PointEntity pointEntity = pointRepository.findByUserId(userId)
                 .orElseThrow(EntityNotFoundException::new);
 
-        return PointDto.from(pointEntity);
+        return PointResponseDto.from(pointEntity);
     }
 
     @Transactional
