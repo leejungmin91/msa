@@ -14,9 +14,21 @@ class SignupEventConsumer(
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @KafkaListener(topics = ["user.signup.mail"], groupId = "notification-group")
-    fun consume(event: SignupEvent) {
+    fun mailConsume(event: SignupEvent) {
         try {
             log.info("kafka message received $event")
+            // 메일발송
+            //notificationService.sendSignupEmail(event)
+        } catch (e: Exception) {
+            log.error("Failed to process message: ${e.stackTraceToString()}")
+        }
+    }
+
+    @KafkaListener(topics = ["user.signup.kakao"], groupId = "notification-group")
+    fun kakaoConsume(event: SignupEvent) {
+        try {
+            log.info("kafka message received $event")
+            // 카카오톡발송
             //notificationService.sendSignupEmail(event)
         } catch (e: Exception) {
             log.error("Failed to process message: ${e.stackTraceToString()}")
