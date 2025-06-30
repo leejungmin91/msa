@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8081
 
 spring:
   profiles:
@@ -18,7 +18,7 @@ spring:
     database-platform: org.hibernate.dialect.MariaDBDialect
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
   kafka:
     bootstrap-servers: localhost:29092
