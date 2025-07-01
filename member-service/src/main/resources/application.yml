@@ -39,6 +39,11 @@ spring:
       token-validity-in-seconds: 1800
       refresh-token-validity-in-seconds: 604800
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
 api:
   prefix: "/api/v1"
 

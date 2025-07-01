@@ -8,3 +8,5 @@ include 'common-lib'
 include 'member-service'
 include 'point-service'
 include 'notification-service'
+
+include 'eureka-server'

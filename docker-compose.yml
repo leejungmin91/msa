@@ -3,7 +3,7 @@ version: '3.8'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.2.0
-    container_name: msa-zookeeper
+    container_name: zookeeper
     environment:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_CLIENT_PORT: 2181
@@ -20,7 +20,7 @@ services:
 
   kafka:
     image: confluentinc/cp-kafka:7.2.0
-    container_name: msa-kafka
+    container_name: kafka
     depends_on:
       zookeeper:
         condition: service_healthy
@@ -29,7 +29,7 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://msa-kafka:29092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:29092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:29093
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
@@ -43,7 +43,7 @@ services:
 
   member-db:
     image: mariadb:11.0.2
-    container_name: msa-member-db
+    container_name: member-db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root1234
@@ -63,7 +63,7 @@ services:
 
   point-db:
     image: mariadb:11.0.2
-    container_name: msa-point-db
+    container_name: point-db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root1234
@@ -83,7 +83,7 @@ services:
 
   redis:
     image: redis:7.2
-    container_name: msa-redis
+    container_name: redis
     ports:
       - "6379:6379"
     volumes:
@@ -94,6 +94,16 @@ services:
       timeout: 5s
       retries: 10
 
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
   member-service:
     build:
       context: ./member-service
@@ -102,7 +112,7 @@ services:
     ports:
       - "8081:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mariadb://msa-member-db:3306/member_db
+      SPRING_DATASOURCE_URL: jdbc:mariadb://member-db:3306/member_db
       SPRING_DATASOURCE_USERNAME: member_user
       SPRING_DATASOURCE_PASSWORD: member_pw
       SPRING_PROFILES_ACTIVE: prod
@@ -120,7 +130,7 @@ services:
     ports:
       - "8082:8080"
     environment:
-      SPRING_PROFILES_ACTIVE: local
+      SPRING_PROFILES_ACTIVE: prod
     depends_on:
       kafka:
         condition: service_healthy
@@ -133,7 +143,7 @@ services:
     ports:
       - "8083:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mariadb://msa-point-db:3307/point_db
+      SPRING_DATASOURCE_URL: jdbc:mariadb://point-db:3306/point_db
       SPRING_DATASOURCE_USERNAME: point_user
       SPRING_DATASOURCE_PASSWORD: point_pw
       SPRING_PROFILES_ACTIVE: prod
