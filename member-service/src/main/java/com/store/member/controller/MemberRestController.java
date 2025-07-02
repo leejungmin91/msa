@@ -55,5 +55,14 @@ public class MemberRestController {
                 );
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> getUserInfo(@PathVariable Long id) {
+        MemberEntity member = memberService.getById(id);
+        return ResponseEntity.ok()
+                .body(ApiResponse.success(
+                        MemberResponseDto.from(member, cryptoService))
+                );
+    }
+
 
 }
