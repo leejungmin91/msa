@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class PointService {
 
     private final PointRepository pointRepository;
     private final PointHistoryService pointHistoryService;
-    private final WebClient webClient;
+    private final RestClient restClient;
 
     public PointResponseDto getUserPoint(Long userId) {
         PointEntity pointEntity = pointRepository.findByUserId(userId)
@@ -46,10 +47,9 @@ public class PointService {
     }
 
     public MemberDto getUserInfo(Long id) {
-        return webClient.get()
+        return restClient.get()
                 .uri("/users/{id}", id)
                 .retrieve()
-                .bodyToMono(MemberDto.class)
-                .block();
+                .body(MemberDto.class);
     }
 }

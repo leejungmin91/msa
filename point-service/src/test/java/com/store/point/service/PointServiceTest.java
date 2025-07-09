@@ -5,17 +5,20 @@ import com.store.point.repository.PointRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.awt.*;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class PointServiceTest {
 
-    private WebClient webClient;
+    private RestClient restClient;
     private PointRepository pointRepository;
     private PointHistoryService pointHistoryService;
     private PointService pointService; // getUserInfo가 포함된 클래스
@@ -24,12 +27,12 @@ class PointServiceTest {
     void setUp() {
         pointRepository = mock(PointRepository.class);
         pointHistoryService = mock(PointHistoryService.class);
-        webClient = mock(WebClient.class, RETURNS_DEEP_STUBS); // 중첩 mock 자동처리
-        WebClient.RequestHeadersUriSpec uriSpec = mock(WebClient.RequestHeadersUriSpec.class);
-        WebClient.RequestHeadersSpec headersSpec = mock(WebClient.RequestHeadersSpec.class);
-        WebClient.ResponseSpec responseSpec = mock(WebClient.ResponseSpec.class);
+        restClient = mock(RestClient.class, RETURNS_DEEP_STUBS); // 중첩 mock 자동처리
+        RestClient.RequestHeadersUriSpec<?> uriSpec = mock(RestClient.RequestHeadersUriSpec.class);
+        RestClient.RequestHeadersSpec<?> headersSpec = mock(RestClient.RequestHeadersSpec.class);
+        RestClient.ResponseSpec responseSpec = mock(RestClient.ResponseSpec.class);
 
-        when(webClient.get()).thenReturn(uriSpec);
+        when(restClient.get()).thenReturn(uriSpec);
         when(uriSpec.uri(anyString(), anyLong())).thenReturn(headersSpec);
         when(headersSpec.retrieve()).thenReturn(responseSpec);
 
@@ -37,9 +40,9 @@ class PointServiceTest {
                 .id(1L)
                 .name("홍길동")
                 .build();
-        when(responseSpec.bodyToMono(MemberDto.class)).thenReturn(Mono.just(mockMember));
+        when(responseSpec.body(MemberDto.class)).thenReturn(mockMember);
 
-        pointService = new PointService(pointRepository, pointHistoryService, webClient); // 생성자 주입 가정
+        pointService = new PointService(pointRepository, pointHistoryService, restClient); // 생성자 주입 가정
     }
 
     @Test
