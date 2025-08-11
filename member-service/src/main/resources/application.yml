@@ -7,9 +7,9 @@ spring:
   application:
     name: member-service
   datasource:
-    url: jdbc:mariadb://localhost:3306/store_db
-    username: store_user
-    password: store_pw
+    url: jdbc:mariadb://localhost:3306/member_db
+    username: member_user
+    password: member_pw
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:

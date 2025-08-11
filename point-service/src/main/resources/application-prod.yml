@@ -5,9 +5,9 @@ spring:
   application:
     name: point-service
   datasource:
-    url: jdbc:mariadb://mariadb:3306/store_db
-    username: store_user
-    password: store_pw
+    url: jdbc:mariadb://mariadb:3306/point_db
+    username: point_user
+    password: point_pw
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:

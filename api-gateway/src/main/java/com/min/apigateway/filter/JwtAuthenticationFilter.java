@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
-    @Value("${security.jwt.secret}")
+    @Value("${spring.security.jwt.secret}")
     private String secretKey;
 
     @Override

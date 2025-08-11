@@ -1,51 +1,26 @@
-buildscript {
-    ext {
-        springBootVersion = '3.2.5'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
-allprojects {
-    group = 'com.store'
-    version = '1.0.0-SNAPSHOT'
-
-    repositories {
-        mavenCentral()
-    }
+plugins {
+    id 'org.springframework.boot' version '3.2.5' apply false
+    id 'io.spring.dependency-management' version '1.1.4' apply false
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
+    // 공통 설정만 최소로
     apply plugin: 'io.spring.dependency-management'
 
-    sourceCompatibility = '21'
-    targetCompatibility = '21'
+    repositories { mavenCentral() }
+
+    plugins.withType(JavaPlugin) {
+        tasks.withType(Test) {
+            useJUnitPlatform()
+        }
+        java {
+            toolchain { languageVersion = JavaLanguageVersion.of(21) }
+        }
+    }
 
     dependencyManagement {
         imports {
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.6"
         }
-    }
-
-    dependencies {
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.kafka:spring-kafka'
-        implementation 'com.fasterxml.jackson.core:jackson-databind'
-
-        compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
-        implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    }
-
-    test {
-        useJUnitPlatform()
     }
 }

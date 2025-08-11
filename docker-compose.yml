@@ -155,6 +155,16 @@ services:
       redis:
         condition: service_healthy
 
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8762:8762"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
 volumes:
   mariadb_data:
   redis_data:

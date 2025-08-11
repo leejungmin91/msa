@@ -1,10 +1,10 @@
+plugins {
+    id 'java-library'
+}
+
 dependencies {
-}
-
-bootJar {
-    enabled = false
-}
-
-jar {
-    enabled = true
+    api 'org.springframework:spring-context'  // 필요한 최소만
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
 }
