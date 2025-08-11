@@ -9,5 +9,5 @@ include 'member-service'
 include 'point-service'
 include 'notification-service'
 
-include 'api-gateway'
+include 'gateway-server'
 include 'eureka-server'
