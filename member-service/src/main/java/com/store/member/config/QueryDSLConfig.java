@@ -1,3 +1,4 @@
+/*
 package com.store.member.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -19,3 +20,4 @@ public class QueryDSLConfig {
     }
 
 }
+*/

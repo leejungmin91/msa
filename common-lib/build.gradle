@@ -3,8 +3,8 @@ plugins {
 }
 
 dependencies {
-    api 'org.springframework:spring-context'  // 필요한 최소만
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
+    //api 'org.springframework:spring-context'  // 필요한 최소만
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

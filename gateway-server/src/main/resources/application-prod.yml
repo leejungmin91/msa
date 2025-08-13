@@ -5,6 +5,25 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
+      routes:
+        - id : member
+          uri : lb://member-service
+          predicates:
+            - Path=/member/**         # 게이트웨이에서 받는 경로
+          filters:
+            - StripPrefix=1            # /member 제거 후 전달
+        - id: point
+          uri: lb://point-service
+          predicates:
+            - Path=/point/**         # 게이트웨이에서 받는 경로
+          filters:
+            - StripPrefix=1            # /member 제거 후 전달
+        - id: notification
+          uri: lb://notification-service
+          predicates:
+            - Path=/notification/**         # 게이트웨이에서 받는 경로
+          filters:
+            - StripPrefix=1            # /member 제거 후 전달
   security:
     jwt:
       header: Authorization

@@ -3,6 +3,7 @@ package com.store.point.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.filter.ForwardedHeaderFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -33,6 +34,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public ForwardedHeaderFilter forwardedHeaderFilter() {
         return new ForwardedHeaderFilter();
+    }
+
+    @Bean
+    public RestClient restClient() {
+        return RestClient.builder().build();
     }
 
 }

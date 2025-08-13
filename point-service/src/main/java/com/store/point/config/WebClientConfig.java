@@ -1,3 +1,4 @@
+/*
 package com.store.point.config;
 
 import org.springframework.context.annotation.Bean;
@@ -12,3 +13,4 @@ public class WebClientConfig {
         return WebClient.builder().build();
     }
 }
+*/

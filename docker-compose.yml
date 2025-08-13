@@ -103,12 +103,6 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
       EUREKA_CLIENT_FETCH_REGISTRY: "false"
-    healthcheck:
-      test: [ "CMD-SHELL", "wget -qO- http://localhost:8761/actuator/health | grep -q '\"status\":\"UP\"'" ]
-      start_period: 20s
-      interval: 5s
-      timeout: 3s
-      retries: 20
 
   member-service:
     build:
@@ -116,7 +110,7 @@ services:
       dockerfile: Dockerfile
     container_name: member-service
     ports:
-      - "8081:8080"
+      - "80:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mariadb://member-db:3306/member_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
       SPRING_DATASOURCE_USERNAME: member_user
@@ -186,7 +180,7 @@ services:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
       eureka-server:
-        condition: service_healthy
+        condition: service_started
 
 volumes:
   member_db_data:

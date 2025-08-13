@@ -6,6 +6,7 @@ plugins {
 
 dependencies {
     implementation project(':common-lib')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
@@ -23,4 +24,10 @@ dependencies {
 
     // eureka
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.kafka:spring-kafka'
 }
