@@ -3,6 +3,7 @@ package com.store.gatewayserver.filter;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -15,6 +16,8 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Component
@@ -41,8 +44,9 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
         try {
             // 2. JWT 검증
-            Claims claims = Jwts.parser()
-                    .setSigningKey(secretKey.getBytes())
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
 
