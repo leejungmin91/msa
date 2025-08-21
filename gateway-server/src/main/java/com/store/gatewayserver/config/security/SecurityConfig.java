@@ -19,8 +19,8 @@ public class SecurityConfig {
                 .authorizeExchange(ex -> ex
                         // 게이트웨이에서 보통 열어두는 엔드포인트
                         .pathMatchers("/actuator/**").permitAll()
-                        .pathMatchers("/member-service/**", "/point-service/**", "/notification-service/**").permitAll()
-                        // 그 외 모두 허용 (원하시면 여기만 authenticated()로 바꾸고 JWT 붙이세요)
+                        .pathMatchers("/member-service/**", "/point-service/**").authenticated()
+                        .pathMatchers("/notification-service/**", "/product-service/**").permitAll()
                         .anyExchange().permitAll()
                 )
                 .build();
