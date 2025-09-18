@@ -16,6 +16,8 @@ dependencies {
     implementation("org.springframework.kafka:spring-kafka")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
+    implementation("org.mariadb.jdbc:mariadb-java-client")
+
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
     // ✅ 클라이언트 스타터만

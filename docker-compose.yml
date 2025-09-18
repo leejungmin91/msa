@@ -79,6 +79,26 @@ services:
       timeout: 5s
       retries: 3
 
+  product-db:
+    image: mariadb:11.0.2
+    container_name: product-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: product_db
+      MYSQL_USER: product_user
+      MYSQL_PASSWORD: product_pw
+    ports:
+      - "3308:3306"
+    volumes:
+      - product_db_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect", "--innodb_initialized" ]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
   redis:
     image: redis:7.2
     container_name: redis
@@ -173,10 +193,15 @@ services:
     ports:
       - "8084:8080"
     environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://product-db:3306/product_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
+      SPRING_DATASOURCE_USERNAME: product_user
+      SPRING_DATASOURCE_PASSWORD: product_pw
       SPRING_PROFILES_ACTIVE: prod
       SPRING_APPLICATION_NAME: product-service
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
+      product-db:
+        condition: service_healthy
       kafka:
         condition: service_healthy
       redis:
@@ -202,4 +227,5 @@ services:
 volumes:
   member_db_data:
   point_db_data:
+  product_db_data:
   redis_data:
