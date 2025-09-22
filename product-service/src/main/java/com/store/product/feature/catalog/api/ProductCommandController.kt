@@ -1,5 +1,6 @@
 package com.store.product.feature.catalog.api
 
+import com.store.common.http.ApiResponse
 import com.store.product.feature.catalog.app.ReadProduct
 import com.store.product.feature.catalog.app.ReadProductCmd
 import com.store.product.feature.catalog.app.RegisterProduct
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("\${api.prefix}/products")
 class ProductCommandController(
     private val registerProduct: RegisterProduct,
     private val readProduct: ReadProduct
@@ -20,8 +21,9 @@ class ProductCommandController(
     }
 
     @GetMapping
-    fun read(@RequestBody req: ReadProductRequest): ProductResponse {
+    fun read(@RequestBody req: ReadProductRequest): ApiResponse? {
         val p = readProduct.handle(ReadProductCmd(req.code))
-        return ProductResponse(id = p.id!!.value, code = p.code, name = p.name, description = p.description, price = p.price, stock = p.stock)
+        val product = ProductResponse(id = p.id!!.value, code = p.code, name = p.name, description = p.description, price = p.price, stock = p.stock)
+        return ApiResponse.success(product)
     }
 }

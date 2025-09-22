@@ -197,7 +197,6 @@ services:
       SPRING_DATASOURCE_USERNAME: product_user
       SPRING_DATASOURCE_PASSWORD: product_pw
       SPRING_PROFILES_ACTIVE: prod
-      SPRING_APPLICATION_NAME: product-service
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
     depends_on:
       product-db:
