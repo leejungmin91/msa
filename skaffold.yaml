@@ -1,0 +1,44 @@
+apiVersion: skaffold/v4beta8
+kind: Config
+metadata:
+  name: msa-local
+build:
+  local:
+    push: false         # 로컬 빌드만, 레지스트리 푸시 안 함
+  artifacts:
+    - image: gateway
+      context: gateway-server
+      docker: { dockerfile: Dockerfile }
+    - image: member
+      context: member-service
+      docker: { dockerfile: Dockerfile }
+    - image: point
+      context: point-service
+      docker: { dockerfile: Dockerfile }
+    - image: product
+      context: product-service
+      docker: { dockerfile: Dockerfile }
+    - image: notification
+      context: notification-service
+      docker: { dockerfile: Dockerfile }
+
+manifests:
+  kustomize:
+    paths:
+      - k8s/infra
+  rawYaml:
+    - k8s/member/*.yaml
+    - k8s/point/*.yaml
+    - k8s/product/*.yaml
+    - k8s/notification/*.yaml
+    - k8s/gateway/*.yaml
+
+deploy:
+  kubectl: {}
+
+portForward:
+  - resourceType: service
+    resourceName: gateway-service
+    namespace: msa
+    port: 8080
+    localPort: 8080

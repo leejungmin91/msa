@@ -130,7 +130,7 @@ services:
       dockerfile: Dockerfile
     container_name: member-service
     ports:
-      - "80:8080"
+      - "8081:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mariadb://member-db:3306/member_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
       SPRING_DATASOURCE_USERNAME: member_user
@@ -214,7 +214,7 @@ services:
       dockerfile: Dockerfile
     container_name: gateway-server
     ports:
-      - "8888:8080"
+      - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_APPLICATION_NAME: gateway

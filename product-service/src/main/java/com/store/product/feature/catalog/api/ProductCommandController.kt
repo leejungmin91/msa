@@ -15,13 +15,14 @@ class ProductCommandController(
     private val readProduct: ReadProduct
 ) {
     @PostMapping
-    fun register(@RequestBody req: RegisterProductRequest): ProductResponse {
+    fun register(@RequestBody req: RegisterProductRequest): ApiResponse {
         val p = registerProduct.handle(RegisterProductCmd(req.code, req.name, description = req.description, price = req.price, stock = req.stock ))
-        return ProductResponse(id = p.id!!.value, code = p.code, name = p.name, description = p.description, price = p.price, stock = p.stock)
+        val product = ProductResponse(id = p.id!!.value, code = p.code, name = p.name, description = p.description, price = p.price, stock = p.stock)
+        return ApiResponse.success(product)
     }
 
     @GetMapping
-    fun read(@RequestBody req: ReadProductRequest): ApiResponse? {
+    fun read(@RequestBody req: ReadProductRequest): ApiResponse {
         val p = readProduct.handle(ReadProductCmd(req.code))
         val product = ProductResponse(id = p.id!!.value, code = p.code, name = p.name, description = p.description, price = p.price, stock = p.stock)
         return ApiResponse.success(product)

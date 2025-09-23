@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: msa
+
+secretGenerator:
+  - name: mariadb-member-secret
+    literals:
+      - MYSQL_ROOT_PASSWORD=root1234
+      - MYSQL_DATABASE=member_db
+      - MYSQL_USER=member_user
+      - MYSQL_PASSWORD=member_pw
+  - name: mariadb-point-secret
+    literals:
+      - MYSQL_ROOT_PASSWORD=root1234
+      - MYSQL_DATABASE=point_db
+      - MYSQL_USER=point_user
+      - MYSQL_PASSWORD=point_pw
+  - name: mariadb-product-secret
+    literals:
+      - MYSQL_ROOT_PASSWORD=root1234
+      - MYSQL_DATABASE=product_db
+      - MYSQL_USER=product_user
+      - MYSQL_PASSWORD=product_pw
+
+resources:
+  - zookeeper.yaml
+  - kafka.yaml
+  - redis.yaml
+  - mariadb-member.yaml
+  - mariadb-point.yaml
+  - mariadb-product.yaml

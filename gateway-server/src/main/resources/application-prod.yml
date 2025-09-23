@@ -1,45 +1,44 @@
+server:
+  port: 8080
+
 spring:
+  application:
+    name: gateway
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: false
       routes:
-        - id : member
-          uri : lb://member-service
+        - id: member
+          uri: http://member-service:8080
           predicates:
-            - Path=/member/**         # 게이트웨이에서 받는 경로
+            - Path=/member/**
           filters:
-            - StripPrefix=1            # /member 제거 후 전달
+            - StripPrefix=1
         - id: point
-          uri: lb://point-service
+          uri: http://point-service:8080
           predicates:
-            - Path=/point/**         # 게이트웨이에서 받는 경로
+            - Path=/point/**
           filters:
-            - StripPrefix=1            # /member 제거 후 전달
+            - StripPrefix=1
         - id: notification
-          uri: lb://notification-service
+          uri: http://notification-service:8080
           predicates:
-            - Path=/notification/**         # 게이트웨이에서 받는 경로
+            - Path=/notification/**
           filters:
-            - StripPrefix=1            # /member 제거 후 전달
+            - StripPrefix=1
         - id: product
-          uri: lb://product-service
+          uri: http://product-service:8080
           predicates:
-            - Path=/product/**         # 게이트웨이에서 받는 경로
+            - Path=/product/**
           filters:
-            - StripPrefix=1            # /member 제거 후 전달
-  security:
-    jwt:
-      header: Authorization
-      secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWAyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
-      token-validity-in-seconds: 1800
-      refresh-token-validity-in-seconds: 604800
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka/
-    register-with-eureka: true
-    fetch-registry: true
-  instance:
-    prefer-ip-address: true
+            - StripPrefix=1
+      default-filters:
+        - AddResponseHeader=X-Gateway, v1
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  endpoint:
+    health:
+      probes:
+        enabled: true
