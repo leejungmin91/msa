@@ -2,6 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: msa
 
+generatorOptions:
+  disableNameSuffixHash: true
+
 secretGenerator:
   - name: mariadb-member-secret
     literals:
@@ -21,6 +24,17 @@ secretGenerator:
       - MYSQL_DATABASE=product_db
       - MYSQL_USER=product_user
       - MYSQL_PASSWORD=product_pw
+
+  - name: product-db-app-secret
+    literals:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://product-db:3306/product_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
+  - name: member-db-app-secret
+    literals:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://member-db:3306/member_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
+  - name: point-db-app-secret
+    literals:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://point-db:3306/point_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
+
 
 resources:
   - zookeeper.yaml
