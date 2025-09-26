@@ -6,6 +6,9 @@ spring:
     name: gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: false
       routes:
         - id: member
           uri: http://member-service:8080
@@ -42,3 +45,8 @@ management:
     health:
       probes:
         enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true

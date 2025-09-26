@@ -2,33 +2,52 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: point
-  namespace: msa
 spec:
   replicas: 2
   selector:
-    matchLabels:
-      app: point
+    matchLabels: { app: point }
   template:
     metadata:
-      labels:
-        app: point
+      labels: { app: point }
     spec:
+      initContainers:
+        - name: wait-mariadb
+          image: busybox:1.36
+          command: [ 'sh','-c','until nc -z mariadb-point 3306; do echo "waiting mariadb..."; sleep 2; done' ]
       containers:
-        - name: point
-          image: point:1.0.0
+        - name: app
+          image: point:latest
           ports:
             - containerPort: 8080
+          # 1) 공개 설정(프로필/URL)은 ConfigMap에서
+          envFrom:
+            - configMapRef: { name: point-config }
+            - secretRef:    { name: point-app-secret }   # (선택) JWT 등
+          # 2) DB 사용자/비밀번호는 Secret에서 키 매칭
           env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: "prod"
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-point-secret
+                  key: MYSQL_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-point-secret
+                  key: MYSQL_PASSWORD
+          startupProbe:
+            httpGet: { path: /actuator/health, port: 8080 }
+            periodSeconds: 3
+            failureThreshold: 60   # 최대 ~3분까지 스타트업 허용
+
           readinessProbe:
-            httpGet: { path: /actuator/health/readiness, port: 8080 }
-            initialDelaySeconds: 5
+            httpGet: { path: /actuator/health, port: 8080 }
             periodSeconds: 5
+            initialDelaySeconds: 5
+            failureThreshold: 12
+
           livenessProbe:
-            httpGet: { path: /actuator/health/liveness, port: 8080 }
-            initialDelaySeconds: 15
+            httpGet: { path: /actuator/health, port: 8080 }
             periodSeconds: 10
-          resources:
-            requests: { cpu: "200m", memory: "256Mi" }
-            limits:   { cpu: "500m", memory: "512Mi" }
+            initialDelaySeconds: 120
+            failureThreshold: 3

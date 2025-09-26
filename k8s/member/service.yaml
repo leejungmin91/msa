@@ -1,34 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: member
+  name: member-service
   namespace: msa
 spec:
-  replicas: 2
+  type: ClusterIP
   selector:
-    matchLabels:
-      app: member
-  template:
-    metadata:
-      labels:
-        app: member
-    spec:
-      containers:
-        - name: member
-          image: member:1.0.0     # ← 실제 이미지
-          ports:
-            - containerPort: 8080
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: "prod"
-          readinessProbe:
-            httpGet: { path: /actuator/health/readiness, port: 8080 }
-            initialDelaySeconds: 5
-            periodSeconds: 5
-          livenessProbe:
-            httpGet: { path: /actuator/health/liveness, port: 8080 }
-            initialDelaySeconds: 15
-            periodSeconds: 10
-          resources:
-            requests: { cpu: "200m", memory: "256Mi" }
-            limits:   { cpu: "500m", memory: "512Mi" }
+    app: member
+  ports:
+    - port: 8080
+      targetPort: 8080

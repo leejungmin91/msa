@@ -4,7 +4,7 @@ metadata:
   name: gateway
   namespace: msa
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: gateway
@@ -21,18 +21,30 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "prod"
+            - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
+              value: "false"
+            - name: SPRING_CLOUD_DISCOVERY_ENABLED
+              value: "false"
+            - name: EUREKA_CLIENT_ENABLED
+              value: "false"
+            - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
+              value: "false"
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              value: "false"
+          startupProbe:
+            httpGet: { path: /actuator/health, port: 8080 }
+            periodSeconds: 3
+            failureThreshold: 60   # ~3분 대기
           readinessProbe:
-            httpGet:
-              path: /actuator/health/readiness
-              port: 8080
-            initialDelaySeconds: 5
+            httpGet: { path: /actuator/health, port: 8080 }
             periodSeconds: 5
+            initialDelaySeconds: 5
+            failureThreshold: 12
           livenessProbe:
-            httpGet:
-              path: /actuator/health/liveness
-              port: 8080
-            initialDelaySeconds: 15
+            httpGet: { path: /actuator/health, port: 8080 }
             periodSeconds: 10
+            initialDelaySeconds: 120
+            failureThreshold: 3
           resources:
             requests:
               cpu: "200m"

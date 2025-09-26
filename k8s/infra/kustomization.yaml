@@ -2,10 +2,34 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: msa
 
-generatorOptions:
-  disableNameSuffixHash: true
+resources:
+  - zookeeper.yaml
+  - kafka.yaml
+  - redis.yaml
+  - mariadb-member.yaml
+  - mariadb-point.yaml
+  - mariadb-product.yaml
+
+configMapGenerator:
+  # ── 앱별 공개 설정 (URL/프로필 등)
+  - name: member-config
+    literals:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb-member:3306/member_db?connectTimeout=5000&socketTimeout=10000&useUnicode=true&characterEncoding=UTF-8
+  - name: point-config
+    literals:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb-point:3306/point_db?connectTimeout=5000&socketTimeout=10000&useUnicode=true&characterEncoding=UTF-8
+  - name: product-config
+    literals:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb-product:3306/product_db?connectTimeout=5000&socketTimeout=10000&useUnicode=true&characterEncoding=UTF-8
+  - name: notification-config
+    literals:
+      - SPRING_PROFILES_ACTIVE=prod
 
 secretGenerator:
+  # ── DB 비밀값(서비스별 DB 사용자/비밀번호)
   - name: mariadb-member-secret
     literals:
       - MYSQL_ROOT_PASSWORD=root1234
@@ -25,21 +49,16 @@ secretGenerator:
       - MYSQL_USER=product_user
       - MYSQL_PASSWORD=product_pw
 
-  - name: product-db-app-secret
+  # ── (선택) 앱 자체의 비밀값(JWT 등)
+  - name: member-app-secret
     literals:
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://product-db:3306/product_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
-  - name: member-db-app-secret
+      - JWT_SECRET=change_me
+  - name: point-app-secret
     literals:
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://member-db:3306/member_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
-  - name: point-db-app-secret
+      - JWT_SECRET=change_me
+  - name: product-app-secret
     literals:
-      - SPRING_DATASOURCE_URL=jdbc:mariadb://point-db:3306/point_db?connectTimeout=5000&socketTimeout=10000&tcpKeepAlive=true&useUnicode=true&characterEncoding=UTF-8
+      - JWT_SECRET=change_me
 
-
-resources:
-  - zookeeper.yaml
-  - kafka.yaml
-  - redis.yaml
-  - mariadb-member.yaml
-  - mariadb-point.yaml
-  - mariadb-product.yaml
+generatorOptions:
+  disableNameSuffixHash: true

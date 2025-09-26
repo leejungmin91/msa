@@ -15,6 +15,7 @@ dependencies {
     implementation("org.mariadb.jdbc:mariadb-java-client")
 
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     // ✅ 클라이언트 스타터만
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")

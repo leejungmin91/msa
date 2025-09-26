@@ -2,33 +2,61 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: product
-  namespace: msa
 spec:
   replicas: 2
   selector:
-    matchLabels:
-      app: product
+    matchLabels: { app: product }
   template:
     metadata:
-      labels:
-        app: product
+      labels: { app: product }
     spec:
+      # (Deployment) product 의 spec.template.spec 에서
+      initContainers:
+        - name: wait-mariadb
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              echo "waiting mariadb-product:3306..."
+              until nc -z -w 1 mariadb-product 3306; do
+                sleep 2
+              done
+              echo "mariadb-product is up"
       containers:
-        - name: product
-          image: product:1.0.0
+        - name: app
+          image: product:latest
           ports:
             - containerPort: 8080
+          # 1) 공개 설정(프로필/URL)은 ConfigMap에서
+          envFrom:
+            - configMapRef: { name: product-config }
+            - secretRef:    { name: product-app-secret }   # (선택) JWT 등
+          # 2) DB 사용자/비밀번호는 Secret에서 키 매칭
           env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: "prod"
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-product-secret
+                  key: MYSQL_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-product-secret
+                  key: MYSQL_PASSWORD
+          startupProbe:
+            httpGet: { path: /actuator/health, port: 8080 }
+            periodSeconds: 3
+            failureThreshold: 60   # 최대 ~3분까지 스타트업 허용
+
           readinessProbe:
-            httpGet: { path: /actuator/health/readiness, port: 8080 }
-            initialDelaySeconds: 5
+            httpGet: { path: /actuator/health, port: 8080 }
             periodSeconds: 5
+            initialDelaySeconds: 5
+            failureThreshold: 12
+
           livenessProbe:
-            httpGet: { path: /actuator/health/liveness, port: 8080 }
-            initialDelaySeconds: 15
+            httpGet: { path: /actuator/health, port: 8080 }
             periodSeconds: 10
-          resources:
-            requests: { cpu: "200m", memory: "256Mi" }
-            limits:   { cpu: "500m", memory: "512Mi" }
+            initialDelaySeconds: 120
+            failureThreshold: 3

@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: point-db
-  namespace: msa
+  name: mariadb-point
+  labels: { app: mariadb-point }
 spec:
-  selector:
-    app: point-db
+  clusterIP: None
+  selector: { app: mariadb-point }
   ports:
     - name: mysql
       port: 3306
@@ -14,82 +14,39 @@ spec:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: point-db
-  namespace: msa
+  name: mariadb-point
 spec:
-  serviceName: point-db
+  serviceName: mariadb-point
   replicas: 1
   selector:
-    matchLabels:
-      app: point-db
+    matchLabels: { app: mariadb-point }
   template:
     metadata:
-      labels:
-        app: point-db
+      labels: { app: mariadb-point }
     spec:
-      initContainers:
-        - name: wait-mariadb
-          image: busybox:1.36
-          command: [ "sh","-c","until nc -z product-db 3306; do echo waiting product-db; sleep 2; done" ]
-        - name: wait-redis
-          image: busybox:1.36
-          command: [ "sh","-c","until nc -z redis 6379; do echo waiting redis; sleep 2; done" ]
-        - name: wait-kafka
-          image: busybox:1.36
-          command: [ "sh","-c","until nc -z kafka 9092; do echo waiting kafka; sleep 2; done" ]
       containers:
         - name: mariadb
-          image: mariadb:11.0.2
+          image: mariadb:11.0
           ports:
-            - name: mysql
-              containerPort: 3306
+            - containerPort: 3306
           envFrom:
-            - secretRef:
-                name: point-db-app-secret
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mariadb-point-secret
-                  key: MYSQL_ROOT_PASSWORD
-            - name: MYSQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: mariadb-point-secret
-                  key: MYSQL_DATABASE
-            - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: mariadb-point-secret
-                  key: MYSQL_USER
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mariadb-point-secret
-                  key: MYSQL_PASSWORD
+            - secretRef: { name: mariadb-point-secret }   # MYSQL_* 사용
           volumeMounts:
             - name: data
               mountPath: /var/lib/mysql
-          # mariadb-* StatefulSet 컨테이너에 추가
-          startupProbe:
-            tcpSocket:
-              port: 3306
-            # 초기화가 오래 걸려도 충분히 기다리기 (예: 최대 5분)
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            failureThreshold: 60   # 60 * 5s = 300초
           readinessProbe:
-            tcpSocket:
-              port: 3306
+            tcpSocket: { port: 3306 }
             initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 5
+            periodSeconds: 5
           livenessProbe:
-            exec:
-              command: [ "sh","-c","pidof mysqld || pidof mariadbd" ]
-            initialDelaySeconds: 60
+            tcpSocket: { port: 3306 }
+            initialDelaySeconds: 15
             periodSeconds: 10
-            timeoutSeconds: 5
-      volumes:
-        - name: data
-          emptyDir: {}
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 10Gi

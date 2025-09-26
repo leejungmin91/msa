@@ -8,6 +8,7 @@ dependencies {
     implementation project(':common-lib')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // maria db
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.1'

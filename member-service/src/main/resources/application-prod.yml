@@ -37,10 +37,16 @@ spring:
       token-validity-in-seconds: 1800
       refresh-token-validity-in-seconds: 604800
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://eureka-server:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
 
 api:
   prefix: "/api/v1"
