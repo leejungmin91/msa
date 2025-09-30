@@ -40,16 +40,15 @@ eureka:
 #      defaultZone: http://eureka-server:8761/eureka/
 
 management:
+  server:
+    port: 8080          # management 포트를 나누지 않음(중요)
   endpoints:
     web:
+      base-path: /actuator
       exposure:
-        include: "health,info"
+        include: health,info
   endpoint:
     health:
       probes:
-        enabled: true
-  health:
-    livenessstate:
-      enabled: true
-    readinessstate:
-      enabled: true
+        enabled: true   # /actuator/health/liveness, /readiness 활성화
+      show-details: never
